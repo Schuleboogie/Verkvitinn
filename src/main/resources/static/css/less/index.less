@@ -1,0 +1,79 @@
+@import "main.less";
+
+header {
+	width: 100%;
+	height: 20%;
+	background-color: @primaryColor;
+	color: #FFFFFF;
+	position: relative;
+
+	h1 {
+		margin: 0;
+		.centered;
+		font-weight: 300;
+		text-transform: uppercase;
+		letter-spacing: 0.3em;
+	}
+}
+main {
+	width: 100%;
+	height: 80%;
+	position: relative;
+
+	div.form-container {
+		width: 50%;
+		.centered;
+
+		form {
+			text-align: center;
+
+			div.field {
+				padding: 0.5em;
+
+				label {
+					display: block;
+					padding: 0.5em;
+					font-size: 1.2em;
+					font-weight: bold;
+				}
+				input {
+					width: 100%;
+					height: 2em;
+					box-sizing: border-box;
+					background-color: @primaryColor;
+					color: #FFFFFF;
+					border-radius: 5px;
+					border: none;
+					padding-left: 1em;
+				}
+				input:focus {
+					outline: none;
+					background-color: @secondaryColor;
+					color: #FFFFFF;
+				}
+				input[type="text"], input[type="password"], .inset {
+					-webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+					-moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+					box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+				}
+				input[type="submit"] {
+					margin-top: 1em;
+					padding: 15px 0 35px 0;
+					font-weight: bold;
+					.inset
+				}
+				input[type="submit"]:hover {
+					background-color: @secondaryColor;
+				}
+			}
+		}
+	}
+}
+// Mobile
+@media (max-width: 800px) {
+	main {
+		div.form-container {
+			width: 80%;
+		}
+	}
+}
