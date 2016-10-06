@@ -20,7 +20,7 @@
 		<main>
 			<section class="menu">
 				<ul>
-					<li>Create new project</li>
+					<a href="/home/create"><li>Create new project</li></a>
 					<li>Settings</li>
 				</ul>
 			</section>

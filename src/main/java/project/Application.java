@@ -13,14 +13,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories
 public class Application extends SpringBootServletInitializer{
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder applicationBuilder){
+		return applicationBuilder.sources(Application.class);
+	}
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder applicationBuilder){
-        return applicationBuilder.sources(Application.class);
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class,args);
-    }
-
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class,args);
+	}
 }
