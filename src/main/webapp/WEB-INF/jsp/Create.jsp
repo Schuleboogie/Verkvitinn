@@ -14,10 +14,11 @@
 	</head>
 	<body>
 		<header>
-			<h1>Create project</h1>
+			<h1>Create new project</h1>
 		</header>
 		<main>
 			<section class="project-form">
+				<h2>Project info</h2>
 				<form	action="" method="post">
 					<div class="field">
 						<label for="name">Project name</label>
@@ -40,10 +41,8 @@
 					</div>
 					<div class="field">
 						<label for="workers">Assigned workers</label>
-						<ul id="workers">
-							<li>John</li>
-							<li>Paul</li>
-							<li>Will</li>
+						<ul id="workers" class="worker-list">
+							<p class="empty">There are no assigned workers</p>
 						</ul>
 					</div>
 					<div class="field">
@@ -51,13 +50,17 @@
 					</div>
 				</form>
 			</section>
-			<section class="worker-list">
+			<section class="available-workers">
 				<h2>Available workers</h2>
-				<ul>
-					<li>Roger</li>
-					<li>Brandon</li>
+				<ul id="availWorkers" class="worker-list">
+					<li><img src="https://api.adorable.io/avatars/55/abott@adorable.io.png" alt="User avatar"><span class="worker-name">John<a href="#">See info</a></span><a href="#" class="add">Add worker</a></li>
+					<li><img src="https://api.adorable.io/avatars/55/john@adorable.io.png" alt="User avatar"><span class="worker-name">Paul<a href="#">See info</a></span><a href="#" class="add">Add worker</a></li>
+					<li><img src="https://api.adorable.io/avatars/55/skuli@adorable.io.png" alt="User avatar"><span class="worker-name">Will<a href="#">See info</a></span><a href="#" class="add">Add worker</a></li>
+					<li><img src="https://api.adorable.io/avatars/55/sunna@adorable.io.png" alt="User avatar"><span class="worker-name">Roger<a href="#">See info</a></span><a href="#" class="add">Add worker</a></li>
+					<li><img src="https://api.adorable.io/avatars/55/briem@adorable.io.png" alt="User avatar"><span class="worker-name">Brandon<a href="#">See info</a></span><a href="#" class="add">Add worker</a></li>
 				</ul>
 			</section>
 		</main>
-		<!--<script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>-->
+		<script type="text/javascript" src="<c:url value="/js/jquery-3.1.1.min.js"/>"></script>
+		<script type="text/javascript" src="<c:url value="/js/create.js"/>"></script>
 </html>

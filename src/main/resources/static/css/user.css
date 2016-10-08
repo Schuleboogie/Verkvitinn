@@ -36,6 +36,15 @@ header h1 {
   top: 50%;
   transform: translateY(-50%);
 }
+header a {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 5em;
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
 header img {
   position: absolute;
   height: 3em;
@@ -62,6 +71,28 @@ main section ul li {
 }
 main section ul li:hover {
   background-color: antiquewhite;
+}
+main section ul.worker-list li {
+  text-align: left;
+  position: relative;
+}
+main section ul.worker-list li img {
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+main section ul.worker-list li span.worker-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+main section ul.worker-list li span.worker-name a {
+  display: block;
+  text-decoration: underline;
+}
+main section ul.worker-list li a.add {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  text-decoration: underline;
 }
 main section a {
   color: inherit;
@@ -94,6 +125,24 @@ main section.project-form form div.field input:focus,
 main section.project-form form div.field textarea:focus {
   outline: none;
   border: 1px solid #000000;
+}
+main section.project-form form div.field input[type="submit"] {
+  background: none;
+  padding: 0.5em 0 2em 0;
+  margin-bottom: 2em;
+}
+main section.user-info {
+  width: 100%;
+}
+main section.user-info h2 {
+  text-align: left;
+  margin-left: 0.5em;
+}
+main section.user-info img {
+  margin-left: 1em;
+}
+main section.user-info ul li span.item-title {
+  font-weight: bold;
 }
 @media (max-width: 800px) {
   main section {

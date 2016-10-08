@@ -6,6 +6,9 @@ import project.persistence.entities.User;
 import project.persistence.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class UserService {
 	// User repository
@@ -39,5 +42,10 @@ public class UserService {
 		if (users.save(newUser) != null)
 			return true;
 		else return false;
+	}
+
+	// Find user by username
+	public User findByUsername(String username) {
+		return users.findByUsername(username);
 	}
 }

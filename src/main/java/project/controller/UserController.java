@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import javax.servlet.http.HttpSession;
 import project.service.UserService;
 import project.persistence.entities.User;
 
@@ -24,15 +25,32 @@ public class UserController {
 
 	// User home page
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String userHome() {
-		// Here we would validate the user ...
-
-		return "Home";
+	public String userHome(HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			return "Home";
+		}
+		else return "redirect:/";
 	}
 
 	// Create new project
 	@RequestMapping(value = "create", method = RequestMethod.GET)
-	public String createProject() {
-		return "Create";
+	public String createProject(HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			return "Create";
+		}
+		return "redirect:/";
+	}
+
+	// Logout
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		if (session.getAttribute("user") != null) {
+			session.removeAttribute("user");
+		}
+		return "redirect:/";
 	}
 }

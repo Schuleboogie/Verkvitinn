@@ -15,6 +15,15 @@ header {
 		top: 50%;
 		transform: translateY(-50%);
 	}
+	a {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: 5em;
+		color: inherit;
+		font-weight: bold;
+		text-decoration: none;
+	}
 	img {
 		position: absolute;
 		height: 3em;
@@ -43,6 +52,32 @@ main {
 			}
 			li:hover {
 				background-color: antiquewhite;
+			}
+		}
+		ul.worker-list {
+			li {
+				text-align: left;
+				position: relative;
+
+				img {
+					vertical-align: middle;
+					margin-right: 0.5em;
+				}
+				span.worker-name {
+					display: inline-block;
+					vertical-align: middle;
+
+					a {
+						display: block;
+						text-decoration: underline;
+					}
+				}
+				a.add {
+					position: absolute;
+					top: 0.5em;
+					right: 0.5em;
+					text-decoration: underline;
+				}
 			}
 		}
 		a {
@@ -75,6 +110,29 @@ main {
 				input:focus, textarea:focus {
 					outline: none;
 					border: 1px solid #000000;
+				}
+				input[type="submit"] {
+					background: none;
+					padding: 0.5em 0 2em 0;
+					margin-bottom: 2em;
+				}
+			}
+		}
+	}
+	section.user-info {
+		width: 100%;
+
+		h2 {
+			text-align: left;
+			margin-left: 0.5em;
+		}
+		img {
+			margin-left: 1em;
+		}
+		ul {
+			li {
+				span.item-title {
+					font-weight: bold;
 				}
 			}
 		}

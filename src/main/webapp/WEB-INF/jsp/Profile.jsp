@@ -5,7 +5,7 @@
 
 <html lang="en">
 	<head>
-		<title>Home</title>
+		<title>${user.username}</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="<c:url value="/css/normalize.css"/>"/>
@@ -14,25 +14,16 @@
 	</head>
 	<body>
 		<header>
-			<h1>Welcome ${user.username}</h1>
-			<a href="/home/logout">Logout</a>
-			<img src="/img/lumbergh.jpg" alt="User Image">
+			<h1>${user.username}</h1>
 		</header>
 		<main>
-			<section class="menu">
+			<section class="user-info">
+				<h2>User info</h2>
+				<img src="https://api.adorable.io/avatars/120/${user.username}.png" alt="${user.username}">
 				<ul>
-					<a href="/home/create"><li>Create new project</li></a>
-					<li>Settings</li>
-				</ul>
-			</section>
-			<section class="projects">
-				<h2>Ongoing projects</h2>
-				<ul>
-					<li>Eskivellir 11 apartments</li>
-					<li>Hvergigata 57 house</li>
-					<li>East Harbor Hotel</li>
+					<li><span class="item-title">Username:</span> ${user.username}</li>
+					<li><span class="item-title">Role:</span> ${user.role}</li>
 				</ul>
 			</section>
 		</main>
-		<!--<script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>-->
 </html>

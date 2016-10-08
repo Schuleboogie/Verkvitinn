@@ -31,6 +31,7 @@
 						<input type="submit" value="Login">
 					</div>
 				</form>
+				<div class="error">${error}</div>
 			</div>
 		</main>
 		<!--<script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>-->
