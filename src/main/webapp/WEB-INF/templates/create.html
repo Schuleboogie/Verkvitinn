@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<title>Create new project</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+	</head>
+	<body>
+		<header>
+			<h1>Create new project</h1>
+			<a href="/home" class="header-button">
+				<span class="header-button-text">Home</span>
+			</a>
+		</header>
+		<main>
+			<section class="project-form">
+				<h2>Project info</h2>
+				<form action="" method="post">
+					<input type="hidden" name="admin" th:attr="value=${user.username}" />
+					<div class="field">
+						<label for="name">Project name</label>
+						<input type="text" name="name" id="name" autofocus="true" />
+					</div>
+					<div class="field">
+						<label for="description">Short description of the project</label>
+						<textarea name="description" id="description"></textarea>
+					</div>
+					<div class="field">
+						<label for="location">Location</label>
+						<input type="text" name="location" id="location" />
+					</div>
+					<div class="field">
+						<label for="tools">Required tools</label>
+						<input type="text" name="tools" id="tools" />
+					</div>
+					<div class="field">
+						<label for="est-time">Estimated time</label>
+						<input type="text" name="estTime" id="est-time" />
+					</div>
+					<div class="field">
+						<label for="workers">Assigned workers</label>
+						<ul id="workers" class="worker-list">
+							<p class="empty">There are no assigned workers</p>
+						</ul>
+					</div>
+					<div class="field">
+						<input type="submit" value="Create project" />
+					</div>
+				</form>
+				<div class="error" th:text="${error}"></div>
+			</section>
+			<section class="available-workers">
+				<h2>Available workers</h2>
+				<ul id="availWorkers" class="worker-list">
+					<li th:each="worker : ${workers}">
+						<img th:src="'https://api.adorable.io/avatars/55/' + ${worker.username} + '.png'" th:alt="${worker.username}" />
+						<span class="worker-info">
+							<span th:text="${worker.name}" class="worker-name"></span>
+							<a th:href="'/users/' + ${worker.username}" class="worker-page" target="_blank">See info</a>
+							<input type="hidden" name="workers" th:attr="value=${worker.username}" />
+						</span>
+						<a href="#" class="add">Add worker</a>
+					</li>
+					<p th:if="${#lists.isEmpty(workers)}" class="empty">There are no available workers</p>
+				</ul>
+			</section>
+		</main>
+		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/js/create.js"></script>
+	</body>
+</html>

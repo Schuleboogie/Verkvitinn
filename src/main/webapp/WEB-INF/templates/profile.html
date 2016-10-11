@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<title th:text="${user.name}"></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+	</head>
+	<body>
+		<header>
+			<h1 th:text="${user.name}"></h1>
+		</header>
+		<main>
+			<section th:inline="text" class="user-info">
+				<h2>User info</h2>
+				<img th:src="'https://api.adorable.io/avatars/120/' + ${user.username} + '.png'" th:alt="${user.username}" />
+				<ul>
+					<li><span class="item-title">Name:</span> <span th:text="${user.name}"></span></li>
+					<li><span class="item-title">Username:</span> <span th:text="${user.username}"></span></li>
+					<li><span class="item-title">Role:</span> <span th:text="${user.role}"></span></li>
+				</ul>
+			</section>
+		</main>
+	</body>
+</html>

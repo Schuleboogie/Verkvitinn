@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<title>Home</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+	</head>
+	<body>
+		<header>
+			<h1>Welcome <span th:text="${user.name}"></span></h1>
+			<a href="/home/logout" class="header-button">
+				<span class="header-button-text">Logout</span>
+			</a>
+		</header>
+		<main>
+			<section class="menu">
+				<ul>
+					<a th:if="${role == 'admin'}" href="/home/create"><li>Create new project</li></a>
+					<li>Settings</li>
+				</ul>
+			</section>
+			<section class="projects">
+				<h2 th:if="${role == 'admin'}">Ongoing projects</h2>
+				<h2 th:if="${role == 'worker'}">Assigned projects</h2>
+				<ul>
+					<li th:each="project : ${projects}">
+						<span th:text="${project.name}" class="project-name"></span>
+						<a th:href="'/projects/' + ${project.id}" class="project-page" target="_blank">See info</a>
+					</li>
+				</ul>
+			</section>
+		</main>
+		<!--<script type="text/javascript" src="/js/main.js"></script>-->
+	</body>
+</html>

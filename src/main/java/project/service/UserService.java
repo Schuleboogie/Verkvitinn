@@ -32,7 +32,6 @@ public class UserService {
 
 	// Register user
 	public boolean register(User newUser) {
-		System.out.println(newUser);
 		String password = newUser.getPassword();
 		// Encode password
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -47,5 +46,10 @@ public class UserService {
 	// Find user by username
 	public User findByUsername(String username) {
 		return users.findByUsername(username);
+	}
+
+	// Find users by role
+	public List<User> findByRole(String role) {
+		return users.findByRole(role);
 	}
 }

@@ -2,7 +2,7 @@ package project.persistence.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import project.persistence.entities.User;
+import project.persistence.entities.Project;
 
 import java.util.List;
 
@@ -13,10 +13,12 @@ import java.util.List;
  * http://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html
  *
  */
-public interface UserRepository extends JpaRepository<User, Long> {
-	User save(User newUser);
+public interface ProjectRepository extends JpaRepository<Project, Long> {
+	Project save(Project newProject);
 
-	User findByUsername(String username);
+	Project findOne(Long id);
 
-	List<User> findByRole(String role);
+	List<Project> findByAdmin(String admin);
+
+	List<Project> findAll();
 }

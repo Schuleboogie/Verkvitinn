@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<title>Register bakdyr</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<body>
+		<h1>Register me</h1>
+		<form action="" method="post" class="login-form">
+			<label>Choose username</label>
+			<input name="username" type="text" />
+			<label>Choose password</label>
+			<input name="password" type="password" />
+			<label>Choose role</label>
+			<select name="role">
+				<option value="admin">Admin</option>
+				<option value="worker">Worker</option>
+			</select>
+			<label>Choose name</label>
+			<input name="name" type="text" />
+			<input type="submit" value="Register user" />
+		</form>
+	</body>
+</html>

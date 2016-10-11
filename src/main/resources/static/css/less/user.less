@@ -15,14 +15,27 @@ header {
 		top: 50%;
 		transform: translateY(-50%);
 	}
-	a {
+	a.header-button {
+		width: 5em;
+		height: 100%;
+		background-color: @secondaryColor;
 		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		right: 5em;
+		right: 0;
+		top: 0;
 		color: inherit;
-		font-weight: bold;
-		text-decoration: none;
+
+		span.header-button-text {
+			position: absolute;
+			top: 50%;
+			left: 52%;
+			display: block;
+			transform: translate(-50%, -50%);
+			font-weight: bold;
+			text-decoration: none;
+		}
+	}
+	a.header-button:hover {
+		background-color: @lighter;
 	}
 	img {
 		position: absolute;
@@ -60,17 +73,23 @@ main {
 				position: relative;
 
 				img {
-					vertical-align: middle;
+					vertical-align: top;
 					margin-right: 0.5em;
 				}
-				span.worker-name {
+				span.worker-info {
 					display: inline-block;
-					vertical-align: middle;
 
-					a {
+					span.worker-name {
 						display: block;
+						vertical-align: middle;
+					}
+					a.worker-page {
 						text-decoration: underline;
 					}
+				}
+				a.worker-page {
+					display: inline-block;
+					text-decoration: underline;
 				}
 				a.add {
 					position: absolute;
@@ -83,6 +102,12 @@ main {
 		a {
 			color: inherit;
 			text-decoration: none;
+		}
+		a:hover {
+			color: @primaryColor;
+		}
+		p.empty {
+			text-align: center;
 		}
 	}
 	section.project-form {
@@ -98,6 +123,7 @@ main {
 				input, textarea {
 					width: 95%;
 					margin: 0.5em auto;
+					padding-left: 0.5em;
 					border-radius: 5px;
 					border: 1px dashed #000000;
 				}
@@ -133,6 +159,37 @@ main {
 			li {
 				span.item-title {
 					font-weight: bold;
+				}
+			}
+		}
+	}
+	section.project-info {
+		width: 100%;
+
+		h2 {
+			text-align: left;
+			margin-left: 0.5em;
+		}
+		ul {
+			li {
+				span.item-title {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+	section.projects {
+		ul {
+			li {
+				span.project-name {
+					display: block;
+				}
+				a.project-page {
+					display: inline-block;
+					text-decoration: underline;
+				}
+				a.project-page:hover {
+					color: @primaryColor;
 				}
 			}
 		}

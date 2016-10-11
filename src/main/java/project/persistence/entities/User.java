@@ -19,14 +19,25 @@ public class User {
 	private String password;
 	// The user's role, Admin or Worker
 	private String role;
+	// The user's name
+	private String name;
 
 	public User() {
 
 	}
-	public User(String username, String password, String role) {
+	public User(String username, String password, String role, String name) {
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.name = name;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getPassword() {
@@ -51,5 +62,13 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

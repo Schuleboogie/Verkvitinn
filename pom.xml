@@ -54,6 +54,16 @@
 			<version>1.2.2.RELEASE</version>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>2.1.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+			<version>2.1.4.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>

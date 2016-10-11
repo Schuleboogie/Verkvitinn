@@ -39,8 +39,7 @@ public class HomeController {
 			return "redirect:/home";
 		}
 		else {
-			model.addAttribute("user", new User());
-			return "Index";
+			return "index";
 		}
 	}
 
@@ -48,20 +47,19 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String login(@ModelAttribute("user") User user, HttpSession session, Model model) {
 		if (userService.auth(user)) {
-			session.setAttribute("user", user);
+			session.setAttribute("user", userService.findByUsername(user.getUsername()));
 			return "redirect:/home";
 		}
 		else {
 			model.addAttribute("error", "Error authenticating user");
-			return "Index";
+			return "index";
 		}
 	}
 
 	// Register page
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(Model model) {
-		model.addAttribute("user", new User());
-		return "Register";
+		return "register";
 	}
 
 	// Register post
@@ -69,6 +67,6 @@ public class HomeController {
 	public String registerPost(@ModelAttribute("user") User newUser) {
 		if (userService.register(newUser))
 			return "redirect:/home";
-		else return "Register";
+		else return "register";
 	}
 }

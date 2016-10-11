@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<title th:text="${project.name}"></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+	</head>
+	<body>
+		<header>
+			<h1 th:text="${project.name}"></h1>
+		</header>
+		<main>
+			<section class="project-info">
+				<h2>Project info</h2>
+				<ul>
+					<li><span class="item-title">Name:</span> <span th:text="${project.name}"></span></li>
+					<li><span class="item-title">Description:</span> <span th:text="${project.description}"></span></li>
+					<li><span class="item-title">Location:</span> <span th:text="${project.location}"></span></li>
+					<li><span class="item-title">Required tools:</span> <span th:text="${project.tools}"></span></li>
+					<li><span class="item-title">Estimated time:</span> <span th:text="${project.estTime}"></span></li>
+					<li>
+						<span class="item-title">Assigned workers:</span>
+						<ul class="worker-list">
+							<li th:each="worker : ${aworkers}">
+								<img th:src="'https://api.adorable.io/avatars/55/' + ${worker.username} + '.png'" th:alt="${worker.username}" />
+								<span class="worker-info">
+									<span th:text="${worker.name}" class="worker-name"></span>
+									<a th:href="'/users/' + ${worker.username}" class="worker-page" target="_blank">See info</a>
+								</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+		</main>
+	</body>
+</html>

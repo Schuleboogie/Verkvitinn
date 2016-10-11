@@ -23,21 +23,15 @@ public class ProfileController {
 		this.userService = userService;
 	}
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String profile() {
+	public String users() {
 		return "redirect:/";
 	}
 	// User profile
 	@RequestMapping(value = "{username}", method = RequestMethod.GET)
 	public String profile(@PathVariable String username, HttpSession session, Model model) {
 		if (session.getAttribute("user") != null) {
-			User user = (User) session.getAttribute("user");
-			// If requested user is same as logged in user, redirect to home page
-			if (user.getUsername() == username)
-				return "redirect:/home";
-			else {
-				model.addAttribute("user", userService.findByUsername(username));
-				return "Profile";
-			}
+			model.addAttribute("user", userService.findByUsername(username));
+			return "profile";
 		}
 		else return "redirect:/";
 	}
