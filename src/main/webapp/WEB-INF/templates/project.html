@@ -15,6 +15,7 @@
 		<main>
 			<section class="project-info">
 				<h2>Project info</h2>
+				<a th:href="${project.id} + '/edit'">Edit project</a>
 				<ul>
 					<li><span class="item-title">Name:</span> <span th:text="${project.name}"></span></li>
 					<li><span class="item-title">Description:</span> <span th:text="${project.description}"></span></li>

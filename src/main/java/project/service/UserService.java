@@ -3,11 +3,13 @@ package project.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.persistence.entities.User;
+import project.persistence.entities.Project;
 import project.persistence.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -51,5 +53,23 @@ public class UserService {
 	// Find users by role
 	public List<User> findByRole(String role) {
 		return users.findByRole(role);
+	}
+
+	// Find workers not in project
+	public List<User> findWorkersNotInProject(Project project) {
+		String[] projectWorkers = project.getWorkers();
+		List<User> allWorkers = this.findByRole("worker");
+		// Return all workers if no workers on project
+		if (projectWorkers == null)
+			return allWorkers;
+
+		List<User> availableWorkers = new ArrayList<User>();
+		for (int i = 0; i < projectWorkers.length; i++) {
+			for (User worker : allWorkers) {
+				if (!worker.getUsername().equals(projectWorkers[i]))
+					availableWorkers.add(worker);
+			}
+		}
+		return availableWorkers;
 	}
 }

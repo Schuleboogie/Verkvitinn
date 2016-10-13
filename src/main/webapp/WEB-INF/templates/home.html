@@ -18,7 +18,7 @@
 		<main>
 			<section class="menu">
 				<ul>
-					<a th:if="${role == 'admin'}" href="/home/create"><li>Create new project</li></a>
+					<a th:if="${role == 'admin'}" href="/projects/create"><li>Create new project</li></a>
 					<li>Settings</li>
 				</ul>
 			</section>
@@ -30,6 +30,12 @@
 						<span th:text="${project.name}" class="project-name"></span>
 						<a th:href="'/projects/' + ${project.id}" class="project-page" target="_blank">See info</a>
 					</li>
+					<div th:if="${#lists.isEmpty(projects)}" class="empty">
+						<div th:switch="${role}">
+							<p th:case="'admin'" class="empty">There are no ongoing projects</p>
+							<p th:case="'worker'" class="empty">There are no assigned projects</p>
+						</div>
+					</div>
 				</ul>
 			</section>
 		</main>

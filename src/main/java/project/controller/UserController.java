@@ -50,51 +50,6 @@ public class UserController {
 		else return "redirect:/";
 	}
 
-	// Create new project
-	@RequestMapping(value = "create", method = RequestMethod.GET)
-	public String createProject(HttpSession session, Model model) {
-		if (session.getAttribute("user") != null) {
-			// Identify if admin
-			User user = (User) session.getAttribute("user");
-			if (user.getRole().equals("admin")) {
-				// Load project form
-				model.addAttribute("user", user);
-				// Add available workers
-				model.addAttribute("workers", userService.findByRole("worker"));
-				// Generate form
-				return "create";
-			}
-			else return "redirect:/";
-		}
-		else return "redirect:/";
-	}
-
-	// Posting new project
-	@RequestMapping(value = "create", method = RequestMethod.POST)
-	public String postProject(@ModelAttribute("project") Project newProject, HttpSession session, Model model) {
-		if (session.getAttribute("user") != null) {
-			User user = (User) session.getAttribute("user");
-			// Identify if admin and logged in admin is the same as owner of project
-			if (user.getRole().equals("admin") && user.getUsername().equals(newProject.getAdmin())) {
-				Project createdProject = projectService.create(newProject);
-				if (createdProject != null) {
-					return "redirect:/projects/" + createdProject.getId();
-				}
-				else {
-					model.addAttribute("user", user);
-					// Add available workers
-					model.addAttribute("workers", userService.findByRole("worker"));
-					// Generate form again with error report
-					model.addAttribute("error", "Error creating project");
-					return "create";
-				}
-
-			}
-			else return "redirect:/";
-		}
-		else return "redirect:/";
-	}
-
 	// Logout
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {

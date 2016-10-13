@@ -10,6 +10,9 @@ var Site = (function() {
 		availableWorkerList.find('li a.add').each(function() {
 			$(this).click(addWorker);
 		});
+		workerList.find('li a.add').each(function() {
+			$(this).click(addAvailableWorker);
+		});
 	}
 	// Add worker to list of workers on job
 	function addWorker(e) {
