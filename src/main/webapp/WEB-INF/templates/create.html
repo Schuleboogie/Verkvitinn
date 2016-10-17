@@ -5,17 +5,14 @@
 		<title th:if="${nproject != null}">Edit project</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="/css/main.css" />
-		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user/create.css" />
+		<script src="https://use.fontawesome.com/1adde8da0e.js"></script>
 	</head>
 	<body>
 		<header>
 			<h1 th:if="${nproject == null}">Create new project</h1>
 			<h1 th:if="${nproject != null}">Edit project</h1>
-			<a href="/home" class="header-button">
-				<span class="header-button-text">Home</span>
-			</a>
+			<div th:include="header-buttons" class="header-buttons"></div>
 		</header>
 		<main>
 			<section class="project-form">
@@ -59,13 +56,14 @@
 									<a th:href="'/users/' + ${worker.username}" class="worker-page" target="_blank">See info</a>
 									<input type="hidden" name="workers" th:attr="value=${worker.username}" />
 								</span>
-								<a href="#" class="add">Remove worker</a>
+								<a href="#" class="add"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Remove worker</a>
 							</li>
 							<p th:if="${#lists.isEmpty(aworkers)}" class="empty">There are no assigned workers</p>
 						</ul>
 					</div>
 					<div class="field">
-						<input type="submit" value="Post project" />
+						<input type="submit" th:if="${nproject == null}" value="Post project" />
+						<input type="submit" th:if="${nproject != null}" value="Update project" />
 					</div>
 				</form>
 				<div class="error" th:text="${error}"></div>
@@ -80,7 +78,7 @@
 							<a th:href="'/users/' + ${worker.username}" class="worker-page" target="_blank">See info</a>
 							<input type="hidden" name="workers" th:attr="value=${worker.username}" />
 						</span>
-						<a href="#" class="add">Add worker</a>
+						<a href="#" class="add"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Add worker</a>
 					</li>
 					<p th:if="${#lists.isEmpty(workers)}" class="empty">There are no available workers</p>
 				</ul>

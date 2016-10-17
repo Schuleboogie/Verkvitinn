@@ -1,0 +1,69 @@
+// Project page
+@import "user.less";
+
+main {
+	section.project-info {
+		h2 {
+			text-align: left;
+			margin: 1rem;
+		}
+		ul {
+			li {
+				span.item-title {
+					font-weight: bold;
+				}
+			}
+		}
+		ul.project-options {
+			li {
+				position: relative;
+				overflow: hidden;
+
+				div.delete-dialog {
+					width: 20%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					right: 0;
+					color: #FFFFFF;
+					text-align: center;
+					font-size: 0.8em;
+
+					a {
+						width: 50%;
+						height: 100%;
+						position: absolute;
+						bottom: 0;
+						box-sizing: border-box;
+						background-color: @primaryColor;
+						color: #FFFFFF;
+
+						span.link-content {
+							position: absolute;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+						}
+					}
+					a:hover {
+						color: #FFFFFF;
+						text-decoration: underline;
+						background-color: @lighter;
+					}
+					a#delete-yes {
+						background-color: @secondaryColor;
+						left: 0;
+					}
+					a#delete-yes:hover {
+						background-color: @lighter;
+					}
+					a#delete-cancel {
+						right: 0;
+					}
+				}
+			}
+		}
+	}
+	section.project-messages {
+	}
+}

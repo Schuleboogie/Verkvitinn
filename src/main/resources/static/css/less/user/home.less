@@ -1,0 +1,31 @@
+// User home page
+@import "user.less";
+
+main {
+	section.projects {
+		ul {
+			li {
+				position: relative;
+
+				span.project-name {
+					display: block;
+				}
+				a.project-page {
+					display: inline-block;
+					text-decoration: underline;
+				}
+				a.project-page:hover {
+					color: @primaryColor;
+				}
+				span.project-workers, span.project-location {
+					position: absolute;
+					top: 1em;
+					right: 1em;
+				}
+				span.project-location {
+					top: 2.4em;
+				}
+			}
+		}
+	}
+}

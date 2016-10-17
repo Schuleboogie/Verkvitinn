@@ -18,7 +18,7 @@ var Site = (function() {
 	function addWorker(e) {
 		e.preventDefault();
 		var worker = $(this).parent().clone();
-		worker.find('a.add').html("Remove worker");
+		worker.find('a.add').html("<i class=\"fa fa-minus-square-o\" aria-hidden=\"true\"></i> Remove worker");
 		// Add event listener for removing worker
 		worker.find('a.add').click(addAvailableWorker);
 
@@ -35,7 +35,7 @@ var Site = (function() {
 	function addAvailableWorker(e) {
 		e.preventDefault();
 		var worker = $(this).parent().clone();
-		worker.find('a.add').html("Add worker");
+		worker.find('a.add').html("<i class=\"fa fa-plus-square-o\" aria-hidden=\"true\"></i> Add worker");
 		// Add event listener for removing worker
 		worker.find('a.add').click(addWorker);
 

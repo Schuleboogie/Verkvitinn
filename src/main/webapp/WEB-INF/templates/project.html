@@ -4,18 +4,17 @@
 		<title th:text="${project.name}"></title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="/css/main.css" />
-		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user/project.css" />
+		<script src="https://use.fontawesome.com/1adde8da0e.js"></script>
 	</head>
 	<body>
 		<header>
 			<h1 th:text="${project.name}"></h1>
+			<div th:include="header-buttons" class="header-buttons"></div>
 		</header>
 		<main>
 			<section class="project-info">
 				<h2>Project info</h2>
-				<a th:href="${project.id} + '/edit'">Edit project</a>
 				<ul>
 					<li><span class="item-title">Name:</span> <span th:text="${project.name}"></span></li>
 					<li><span class="item-title">Description:</span> <span th:text="${project.description}"></span></li>
@@ -35,7 +34,25 @@
 						</ul>
 					</li>
 				</ul>
+				<ul class="project-options links">
+					<li>
+						<a th:href="'/projects/' + ${project.id} + '/edit'" class="project-options-link">
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit project
+						</a>
+					</li>
+					<li>
+						<a th:href="'/projects/' + ${project.id} + '/delete'" class="project-options-link" id="delete-link">
+							<i class="fa fa-trash-o" aria-hidden="true"></i> Delete project
+						</a>
+					</li>
+				</ul>
+			</section>
+			<section class="project-messages">
+				<h2>Messages</h2>
+				<p class="empty">There are no messages</p>
 			</section>
 		</main>
+		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/js/project.js"></script>
 	</body>
 </html>

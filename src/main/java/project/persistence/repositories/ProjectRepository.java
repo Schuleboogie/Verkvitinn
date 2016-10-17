@@ -21,4 +21,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 	List<Project> findByAdmin(String admin);
 
 	List<Project> findAll();
+
+	void delete(Project project);
 }

@@ -4,22 +4,18 @@
 		<title>Home</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="/css/main.css" />
-		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user/home.css" />
 	</head>
 	<body>
 		<header>
 			<h1>Welcome <span th:text="${user.name}"></span></h1>
-			<a href="/home/logout" class="header-button">
-				<span class="header-button-text">Logout</span>
-			</a>
+			<div th:include="header-buttons" class="header-buttons"></div>
 		</header>
 		<main>
 			<section class="menu">
-				<ul>
-					<a th:if="${role == 'admin'}" href="/projects/create"><li>Create new project</li></a>
-					<li>Settings</li>
+				<ul class="links">
+					<li><a th:if="${role == 'admin'}" href="/projects/create">Create new project</a></li>
+					<li><a href="#">Settings</a></li>
 				</ul>
 			</section>
 			<section class="projects">
@@ -28,7 +24,16 @@
 				<ul>
 					<li th:each="project : ${projects}">
 						<span th:text="${project.name}" class="project-name"></span>
-						<a th:href="'/projects/' + ${project.id}" class="project-page" target="_blank">See info</a>
+						<span class="project-workers">
+							<span th:if="${project.workers == null}">No workers</span>
+							<span th:if="${project.workers != null}">
+								<span th:text="${project.workers.length}"></span><span th:if="${project.workers.length == 1}"> worker</span><span th:if="${project.workers.length > 1}"> workers</span>
+							</span>
+						</span>
+						<a th:href="'/projects/' + ${project.id}" class="project-page">See info</a>
+						<span th:if="${project.location != null}" class="project-location">
+							<span th:text="${project.location}"></span>
+						</span>
 					</li>
 					<div th:if="${#lists.isEmpty(projects)}" class="empty">
 						<div th:switch="${role}">

@@ -36,6 +36,11 @@ public class ProjectService {
 		return projects.findOne(id);
 	}
 
+	// Delete project by id
+	public void delete(Project project) {
+		projects.delete(project);
+	}
+
 	// Find projects that worker is assigned to
 	public List<Project> findByWorker(String worker) {
 		List<Project> allProjects = projects.findAll();

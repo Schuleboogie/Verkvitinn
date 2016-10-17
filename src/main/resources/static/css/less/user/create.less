@@ -1,0 +1,40 @@
+// Project form
+@import "user.less";
+
+main {
+	section.project-form {
+		form {
+			width: 100%;
+
+			div.field {
+				text-align: center;
+				label {
+					display: block;
+					padding: 0.5em 0;
+				}
+				input, textarea {
+					width: 95%;
+					margin: 0.5em auto;
+					padding-left: 0.5em;
+					border-radius: 5px;
+					border: 1px dashed #000000;
+				}
+				input {
+					height: 1.5em;
+				}
+				textarea {
+					height: 5em;
+				}
+				input:focus, textarea:focus {
+					outline: none;
+					border: 1px solid #000000;
+				}
+				input[type="submit"] {
+					background: none;
+					padding: 0.5em 0 2em 0;
+					margin-bottom: 2em;
+				}
+			}
+		}
+	}
+}

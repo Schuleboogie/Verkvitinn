@@ -4,13 +4,12 @@
 		<title th:text="${user.name}"></title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="/css/main.css" />
-		<link rel="stylesheet" type="text/css" href="/css/user.css" />
+		<link rel="stylesheet" type="text/css" href="/css/user/profile.css" />
 	</head>
 	<body>
 		<header>
 			<h1 th:text="${user.name}"></h1>
+			<div th:include="header-buttons" class="header-buttons"></div>
 		</header>
 		<main>
 			<section th:inline="text" class="user-info">

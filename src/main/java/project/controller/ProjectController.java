@@ -194,4 +194,23 @@ public class ProjectController {
 		}
 		else return "redirect:/";
 	}
+
+	// Delete project
+	@RequestMapping(value = "{projectId}/delete", method = RequestMethod.GET)
+	public String deleteProject(@PathVariable Long projectId, HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			Project foundProject = projectService.findOne(projectId);
+			if (foundProject != null) {
+				// Identify if logged in user is the same as owner of project
+				if (user.getUsername().equals(foundProject.getAdmin())) {
+					projectService.delete(foundProject);
+					return "redirect:/";
+				}
+				else return "redirect:/";
+			}
+			else return "redirect:/";
+		}
+		else return "redirect:/";
+	}
 }

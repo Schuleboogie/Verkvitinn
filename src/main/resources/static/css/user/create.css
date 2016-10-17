@@ -1,0 +1,178 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700';
+@import 'normalize.css';
+@import '../normalize.css';
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-size: 20px;
+  color: #000000;
+}
+@media (max-width: 800px) {
+  html,
+  body {
+    font-size: 15px;
+  }
+}
+header {
+  width: 100%;
+  height: 4em;
+  text-align: left;
+  background-color: #CC6633;
+  color: #FFFFFF;
+  position: relative;
+}
+header h1 {
+  position: relative;
+  margin: 0;
+  padding-left: 0.5em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+header div.header-buttons {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+header div.header-buttons a.header-button {
+  width: 5em;
+  height: 100%;
+  float: left;
+  color: inherit;
+  position: relative;
+}
+header div.header-buttons a.header-button span.header-button-text {
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  display: block;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  text-decoration: none;
+}
+header div.header-buttons a.header-button:hover {
+  background-color: #CC9966;
+}
+header img {
+  position: absolute;
+  height: 3em;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.5em;
+}
+main section {
+  width: 50%;
+  float: left;
+}
+main section h2 {
+  text-align: center;
+  font-weight: 300;
+}
+main section ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+main section ul li {
+  border-bottom: 1px dashed #000000;
+  padding: 1em;
+}
+main section ul.links li {
+  padding: 0;
+}
+main section ul.links li a {
+  display: block;
+  padding: 1em;
+}
+main section ul.links li a:hover {
+  background-color: antiquewhite;
+}
+main section ul.links li a:hover i {
+  color: #000000;
+}
+main section ul.worker-list li {
+  text-align: left;
+  position: relative;
+}
+main section ul.worker-list li img {
+  vertical-align: top;
+  margin-right: 0.5em;
+}
+main section ul.worker-list li span.worker-info {
+  display: inline-block;
+}
+main section ul.worker-list li span.worker-info span.worker-name {
+  display: block;
+  vertical-align: middle;
+}
+main section ul.worker-list li span.worker-info a.worker-page {
+  text-decoration: underline;
+}
+main section ul.worker-list li a.worker-page {
+  display: inline-block;
+  text-decoration: underline;
+}
+main section ul.worker-list li a.add {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
+main section a {
+  color: inherit;
+  text-decoration: none;
+}
+main section a:hover {
+  color: #CC6633;
+}
+main section p.empty {
+  text-align: center;
+}
+@media (max-width: 800px) {
+  main section {
+    width: 100%;
+  }
+}
+main section.project-form form {
+  width: 100%;
+}
+main section.project-form form div.field {
+  text-align: center;
+}
+main section.project-form form div.field label {
+  display: block;
+  padding: 0.5em 0;
+}
+main section.project-form form div.field input,
+main section.project-form form div.field textarea {
+  width: 95%;
+  margin: 0.5em auto;
+  padding-left: 0.5em;
+  border-radius: 5px;
+  border: 1px dashed #000000;
+}
+main section.project-form form div.field input {
+  height: 1.5em;
+}
+main section.project-form form div.field textarea {
+  height: 5em;
+}
+main section.project-form form div.field input:focus,
+main section.project-form form div.field textarea:focus {
+  outline: none;
+  border: 1px solid #000000;
+}
+main section.project-form form div.field input[type="submit"] {
+  background: none;
+  padding: 0.5em 0 2em 0;
+  margin-bottom: 2em;
+}
