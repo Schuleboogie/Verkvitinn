@@ -1,6 +1,7 @@
 package project.persistence.entities;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "messages") // If you want to specify a table name, you can do so here
@@ -23,11 +24,13 @@ public class Message {
 
 	public Message() {
 	}
-	public Message(Long projectId, String password, String role, String name) {
-		this.username = username;
-		this.password = password;
-		this.role = role;
-		this.name = name;
+	public Message(Long projectId, Date timestamp, User author, boolean admin, boolean headWorker, String message) {
+		this.projectId = projectId;
+		this.timestamp = timestamp;
+		this.author = author;
+		this.admin = admin;
+		this.headWorker = headWorker;
+		this.message = message;
 	}
 
 	public Long getId() {
@@ -38,35 +41,51 @@ public class Message {
 		this.id = id;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public Long getProjectId() {
+		return projectId;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setProjectId(Long projectId) {
+		this.projectId = projectId;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public Date getTimestamp() {
+		return this.timestamp;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
-	public String getRole() {
-		return this.role;
+	public String getAuthor() {
+		return this.author;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
-	public String getName() {
-		return this.name;
+	public boolean getAdmin() {
+		return this.admin;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	public boolean getHeadWorker() {
+		return this.headWorker;
+	}
+
+	public void setHeadWorker(boolean headWorker) {
+		this.headWorker = headWorker;
+	}
+
+	public String getMessage() {
+		return this.message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

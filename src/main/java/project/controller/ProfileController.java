@@ -22,10 +22,6 @@ public class ProfileController {
 	public ProfileController(UserService userService) {
 		this.userService = userService;
 	}
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String users() {
-		return "redirect:/";
-	}
 	// User profile
 	@RequestMapping(value = "{username}", method = RequestMethod.GET)
 	public String profile(@PathVariable String username, HttpSession session, Model model) {
