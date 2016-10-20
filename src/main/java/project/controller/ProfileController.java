@@ -30,7 +30,9 @@ public class ProfileController {
 	@RequestMapping(value = "{username}", method = RequestMethod.GET)
 	public String profile(@PathVariable String username, HttpSession session, Model model) {
 		if (session.getAttribute("user") != null) {
-			model.addAttribute("user", userService.findByUsername(username));
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			model.addAttribute("useri", userService.findByUsername(username));
 			return "profile";
 		}
 		else return "redirect:/";

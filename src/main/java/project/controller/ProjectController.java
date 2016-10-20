@@ -41,6 +41,7 @@ public class ProjectController {
 	public String project(@PathVariable Long projectId, HttpSession session, Model model) {
 		if (session.getAttribute("user") != null) {
 			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
 			Project foundProject = projectService.findOne(projectId);
 			if (foundProject != null) {
 				boolean isWorker = false;
@@ -58,6 +59,8 @@ public class ProjectController {
 					model.addAttribute("aworkers", workers);
 				}
 				// Add project info
+				// Find admin name
+				model.addAttribute("projectAdmin", userService.findByUsername(foundProject.getAdmin()).getName());
 				model.addAttribute("project", foundProject);
 
 				// Identify if logged in user is the same as owner of project OR

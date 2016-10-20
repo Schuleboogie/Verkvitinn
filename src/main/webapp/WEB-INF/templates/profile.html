@@ -14,11 +14,11 @@
 		<main>
 			<section th:inline="text" class="user-info">
 				<h2>User info</h2>
-				<img th:src="'https://api.adorable.io/avatars/120/' + ${user.username} + '.png'" th:alt="${user.username}" />
+				<img th:src="'https://api.adorable.io/avatars/120/' + ${useri.username} + '.png'" th:alt="${useri.username}" />
 				<ul>
-					<li><span class="item-title">Name:</span> <span th:text="${user.name}"></span></li>
-					<li><span class="item-title">Username:</span> <span th:text="${user.username}"></span></li>
-					<li><span class="item-title">Role:</span> <span th:text="${user.role}"></span></li>
+					<li><span class="item-title">Name:</span> <span th:text="${useri.name}"></span></li>
+					<li><span class="item-title">Username:</span> <span th:text="${useri.username}"></span></li>
+					<li><span class="item-title">Role:</span> <span th:text="${useri.role}"></span></li>
 				</ul>
 			</section>
 		</main>

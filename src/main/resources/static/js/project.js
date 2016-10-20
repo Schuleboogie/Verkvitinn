@@ -15,6 +15,7 @@ var Site = (function() {
 		deleteLink.off('click');
 		deleteLink.click(function(e) { e.preventDefault(); });
 		var deleteDialog = $('<div class="delete-dialog" style="right: -20%"><a href="#" id="delete-yes"><span class="link-content">Yes</span></a><a href="#" id="delete-cancel"><span class="link-content">No</span></a></div>');
+		deleteDialog.find('#delete-yes').attr('href', $(this).attr('href'));
 		deleteDialog.find('#delete-cancel').click(function(e) {
 			e.preventDefault();
 			$(this).parent().animate({

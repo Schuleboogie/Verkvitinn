@@ -21,6 +21,7 @@
 					<li><span class="item-title">Location:</span> <span th:text="${project.location}"></span></li>
 					<li><span class="item-title">Required tools:</span> <span th:text="${project.tools}"></span></li>
 					<li><span class="item-title">Estimated time:</span> <span th:text="${project.estTime}"></span></li>
+					<li><span class="item-title">Supervisor:</span> <span th:text="${projectAdmin}"></span></li>
 					<li>
 						<span class="item-title">Assigned workers:</span>
 						<ul class="worker-list">
@@ -34,7 +35,7 @@
 						</ul>
 					</li>
 				</ul>
-				<ul class="project-options links">
+				<ul th:if="${user.role == 'admin'}" class="project-options links">
 					<li>
 						<a th:href="'/projects/' + ${project.id} + '/edit'" class="project-options-link">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit project
