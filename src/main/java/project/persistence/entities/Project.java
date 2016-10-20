@@ -28,7 +28,6 @@ public class Project {
 	private String[] workers;
 
 	public Project() {
-
 	}
 	public Project(String name, String admin, String description, String location, String tools, String estTime, String[] workers) {
 		this.name = name;

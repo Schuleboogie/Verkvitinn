@@ -3,23 +3,27 @@ package project.persistence.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users") // If you want to specify a table name, you can do so here
-public class User {
+@Table(name = "messages") // If you want to specify a table name, you can do so here
+public class Message {
 	// Declare that this attribute is the id
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String username;
-	private String password;
-	// The user's role, Admin or Worker
-	private String role;
-	// The user's name
-	private String name;
+	private Long projectId;
+	private Date timestamp;
+	// The message's author
+	private User author;
+	// Is owner admin?
+	private boolean admin;
+	// Is owner head worker?
+	private boolean headWorker;
+	// The message's contents
+	private String message;
 
-	public User() {
+	public Message() {
 	}
-	public User(String username, String password, String role, String name) {
+	public Message(Long projectId, String password, String role, String name) {
 		this.username = username;
 		this.password = password;
 		this.role = role;

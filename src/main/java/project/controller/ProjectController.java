@@ -31,11 +31,6 @@ public class ProjectController {
 		this.projectService = projectService;
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String projects() {
-		return "redirect:/";
-	}
-
 	// Project info page
 	@RequestMapping(value = "{projectId}", method = RequestMethod.GET)
 	public String project(@PathVariable Long projectId, HttpSession session, Model model) {

@@ -15,13 +15,11 @@ import project.persistence.entities.User;
 @Controller
 public class HomeController {
 	// Instance Variables
-	StringManipulationService stringService;
 	UserService userService;
 
 	// Dependency Injection
 	@Autowired
-	public HomeController(StringManipulationService stringService, UserService userService) {
-		this.stringService = stringService;
+	public HomeController(UserService userService) {
 		this.userService = userService;
 	}
 
