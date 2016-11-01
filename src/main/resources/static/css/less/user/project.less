@@ -64,5 +64,33 @@ main {
 		}
 	}
 	section.project-messages {
+		padding: 0 1em 0 1em;
+		box-sizing: border-box;
+
+		div.message {
+			border-bottom: 1px dashed #000000;
+			padding: 0.5em;
+			position: relative;
+
+			h3 {
+				margin-top: 0.5em;
+			}
+			i {
+				position: absolute;
+				top: 0.5em;
+				right: 0.5em;
+			}
+		}
+		div.admin-message {
+			background-color: #FFFF99;
+		}
+	}
+}
+// Mobile
+@media (max-width: 800px) {
+	main {
+		section.project-messages {
+			padding: 0;
+		}
 	}
 }

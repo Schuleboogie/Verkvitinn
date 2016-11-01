@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<header>
-			<h1>Welcome <span th:text="${user.name}"></span></h1>
+			<h1>Home</h1>
 			<div th:include="header-buttons" class="header-buttons"></div>
 		</header>
 		<main>
@@ -16,6 +16,7 @@
 				<ul class="links">
 					<li><a th:if="${role == 'admin'}" href="/projects/create">Create new project</a></li>
 					<li><a href="#">Settings</a></li>
+					<li><a th:href="'/users/' + ${user.username}">My profile</a></li>
 				</ul>
 			</section>
 			<section class="projects">

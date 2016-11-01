@@ -64,11 +64,16 @@ public class UserService {
 			return allWorkers;
 
 		List<User> availableWorkers = new ArrayList<User>();
-		for (int i = 0; i < projectWorkers.length; i++) {
-			for (User worker : allWorkers) {
-				if (!worker.getUsername().equals(projectWorkers[i]))
-					availableWorkers.add(worker);
+		for (User worker: allWorkers) {
+			// Check if worker is in project
+			boolean inProject = false;
+			for (int i = 0; i < projectWorkers.length; i++) {
+				if (worker.getUsername().equals(projectWorkers[i]))
+					inProject = true;
 			}
+			// Add worker to project if worker not in project
+			if (!inProject)
+				availableWorkers.add(worker);
 		}
 		return availableWorkers;
 	}

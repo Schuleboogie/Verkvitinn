@@ -138,6 +138,7 @@ public class ProjectController {
 						}
 						model.addAttribute("aworkers", workers);
 					}
+					model.addAttribute("user", user);
 					// Add available workers
 					model.addAttribute("workers", userService.findWorkersNotInProject(foundProject));
 					// Add project info
@@ -177,6 +178,7 @@ public class ProjectController {
 							}
 							model.addAttribute("aworkers", workers);
 						}
+						model.addAttribute("user", user);
 						// Add available workers
 						model.addAttribute("workers", userService.findWorkersNotInProject(foundProject));
 						// Add project info

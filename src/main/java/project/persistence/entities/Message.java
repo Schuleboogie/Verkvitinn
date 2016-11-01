@@ -14,7 +14,7 @@ public class Message {
 	private Long projectId;
 	private Date timestamp;
 	// The message's author
-	private User author;
+	private String author;
 	// Is owner admin?
 	private boolean admin;
 	// Is owner head worker?
@@ -24,7 +24,7 @@ public class Message {
 
 	public Message() {
 	}
-	public Message(Long projectId, Date timestamp, User author, boolean admin, boolean headWorker, String message) {
+	public Message(Long projectId, Date timestamp, String author, boolean admin, boolean headWorker, String message) {
 		this.projectId = projectId;
 		this.timestamp = timestamp;
 		this.author = author;
