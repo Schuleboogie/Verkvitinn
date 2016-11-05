@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpSession;
 import project.service.UserService;
 import project.service.ProjectService;
+import project.service.MessageService;
 import project.persistence.entities.User;
 import project.persistence.entities.Project;
 
@@ -23,12 +24,14 @@ public class ProjectController {
 	// Instance Variables
 	UserService userService;
 	ProjectService projectService;
+	MessageService messageService;
 
 	// Dependency Injection
 	@Autowired
-	public ProjectController(UserService userService, ProjectService projectService) {
+	public ProjectController(UserService userService, ProjectService projectService, MessageService messageService) {
 		this.userService = userService;
 		this.projectService = projectService;
+		this.messageService = messageService;
 	}
 
 	// Project info page
@@ -58,6 +61,8 @@ public class ProjectController {
 				model.addAttribute("projectAdmin", userService.findByUsername(foundProject.getAdmin()).getName());
 				model.addAttribute("project", foundProject);
 
+				//Add message info
+				model.addAttribute("messages", messageService.findByProjectId(projectId));
 				// Identify if logged in user is the same as owner of project OR
 				// logged in user is a worker on project
 				if (user.getUsername().equals(foundProject.getAdmin())) {
