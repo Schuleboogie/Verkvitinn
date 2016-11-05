@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 	<head>
-		<title th:text="${user.name}"></title>
+		<title th:text="${useri.name}"></title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" href="/css/user/profile.css" />
 	</head>
 	<body>
 		<header>
-			<h1 th:text="${user.name}"></h1>
+			<h1 th:text="${useri.name}"></h1>
 			<div th:include="header-buttons" class="header-buttons"></div>
 		</header>
 		<main>
