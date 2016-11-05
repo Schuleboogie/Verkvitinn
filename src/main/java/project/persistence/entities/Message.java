@@ -20,17 +20,17 @@ public class Message {
 	// Is owner head worker?
 	private boolean headWorker;
 	// The message's contents
-	private String message;
+	private String content;
 
 	public Message() {
 	}
-	public Message(Long projectId, Date timestamp, String author, boolean admin, boolean headWorker, String message) {
+	public Message(Long projectId, Date timestamp, String author, boolean admin, boolean headWorker, String content) {
 		this.projectId = projectId;
 		this.timestamp = timestamp;
 		this.author = author;
 		this.admin = admin;
 		this.headWorker = headWorker;
-		this.message = message;
+		this.content = content;
 	}
 
 	public Long getId() {
@@ -81,11 +81,11 @@ public class Message {
 		this.headWorker = headWorker;
 	}
 
-	public String getMessage() {
-		return this.message;
+	public String getContent() {
+		return this.content;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

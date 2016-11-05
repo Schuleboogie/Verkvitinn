@@ -18,6 +18,7 @@ import project.persistence.entities.Message;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/projects")
@@ -83,10 +84,16 @@ public class ProjectController {
 
 	// Add new message to the project
 	@RequestMapping(value = "{projectId}", method = RequestMethod.POST)
-	public String project(@PathVariable Long projectId, @ModelAttribute("message") Message newMessage, HttpSession session, Model model) {
+	public String project(@PathVariable Long projectId, @ModelAttribute("newMessage") Message newMessage, HttpSession session, Model model) {
 			if(session.getAttribute("user") != null){
-					User user= (User) session.getAttribute("user");
+					User user = (User) session.getAttribute("user");
 					model.addAttribute("user", user);
+					// Add additional message information
+					newMessage.setProjectId(projectId);
+					newMessage.setTimestamp(new Date());
+					newMessage.setAuthor(user.getUsername());
+					newMessage.setAdmin(user.getRole().equals("admin"));
+					newMessage.setHeadWorker(false);
 					Message createMessage = messageService.create(newMessage);
 					Project foundProject = projectService.findOne(projectId);
 					if(createMessage != null){

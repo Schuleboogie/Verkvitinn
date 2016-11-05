@@ -52,32 +52,22 @@
 				<h2>Messages</h2>
 				<div class="message-form">
 					<form action="" method="post">
-						<textarea name="message" placeholder="Write your message here..."></textarea>
+						<textarea name="content" placeholder="Write your message here..."></textarea>
 						<input type="submit" value="Post message" />
 					</form>
+					<div class="error" th:text="${error}"></div>
 				</div>
-				<!--<p class="empty">There are no messages</p>-->
-				<div class="message worker-message">
-					<h3 class="message-author">Grunt</h3>
-					<p class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consectetur magna ac ligula lobortis, at dapibus neque congue. Etiam ut euismod dolor. In hac habitasse platea dictumst. Vestibulum sed quam scelerisque, vestibulum lectus non, efficitur odio.</p>
-				</div>
-				<div class="message admin-message">
-					<i class="fa fa-flag-o" aria-hidden="true"></i>
-					<h3 class="message-author">Skúli</h3>
-					<p class="message-content">Hey guys! Pick up the pace</p>
-				</div>
-				<div class="message worker-message">
-					<h3 class="message-author">Jón</h3>
-					<p class="message-content">Fuck this, i'm outta here</p>
-				</div>
-				<div class="message admin-message">
-					<i class="fa fa-flag-o" aria-hidden="true"></i>
-					<h3 class="message-author">Skúli</h3>
-					<p class="message-content">You're both fired.</p>
+				<p class="empty" th:if="${#lists.isEmpty(messages)}">There are no messages</p>
+				<div th:each="message : ${messages}" class="message worker-message" th:classappend="${message.admin} ? admin-message">
+					<i th:if="${message.admin}" class="fa fa-flag-o" aria-hidden="true"></i>
+					<h3 th:text="${message.author}" class="message-author"></h3>
+					<p th:text="${message.content}" class="message-content"></p>
+					<p th:text="${message.timestamp}" class="message-time"></p>
 				</div>
 			</section>
 		</main>
 		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/js/moment-with-locales.min.js"></script>
 		<script type="text/javascript" src="/js/project.js"></script>
 	</body>
 </html>
