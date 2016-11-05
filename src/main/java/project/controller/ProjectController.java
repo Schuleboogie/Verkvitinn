@@ -13,6 +13,7 @@ import project.service.ProjectService;
 import project.service.MessageService;
 import project.persistence.entities.User;
 import project.persistence.entities.Project;
+import project.persistence.entities.Message;
 
 import java.util.Collections;
 import java.util.List;
@@ -78,6 +79,59 @@ public class ProjectController {
 			else return "redirect:/";
 		}
 		else return "redirect:/";
+	}
+
+	// Add new message to the project
+	@RequestMapping(value = "{projectId}", method = RequestMethod.POST)
+	public String project(@PathVariable Long projectId, @ModelAttribute("message") Message newMessage, HttpSession session, Model model) {
+			if(session.getAttribute("user") != null){
+					User user= (User) session.getAttribute("user");
+					model.addAttribute("user", user);
+					Message createMessage = messageService.create(newMessage);
+					Project foundProject = projectService.findOne(projectId);
+					if(createMessage != null){
+						return "redirect:/projects/" + projectId;
+					}
+					else{
+						model.addAttribute("error", "Error submitting message");
+						if (foundProject != null) {
+							boolean isWorker = false;
+							// Find further information about workers
+							String[] workerList = foundProject.getWorkers();
+							if (workerList != null) {
+								List<User> workers = new ArrayList<User>();
+								for (int i = 0; i < workerList.length; i++) {
+									User worker = userService.findByUsername(workerList[i]);
+									// Check if user is worker on project
+									if (user.getUsername().equals(worker.getUsername()))
+										isWorker = true;
+									workers.add(worker);
+								}
+								model.addAttribute("aworkers", workers);
+							}
+							// Add project info
+							// Find admin name
+							model.addAttribute("projectAdmin", userService.findByUsername(foundProject.getAdmin()).getName());
+							model.addAttribute("project", foundProject);
+
+							//Add message info
+							model.addAttribute("messages", messageService.findByProjectId(projectId));
+							// Identify if logged in user is the same as owner of project OR
+							// logged in user is a worker on project
+							if (user.getUsername().equals(foundProject.getAdmin())) {
+								// User is admin of project
+							}
+							else if (isWorker) {
+								// User is a worker on project
+							}
+							else return "redirect:/"; // User is not a member of project
+							// Return project if user is member of project
+							return "project";
+						}
+						else return "redirect:/";
+					}
+				}
+				else return "redirect:/";
 	}
 
 	// Create new project
