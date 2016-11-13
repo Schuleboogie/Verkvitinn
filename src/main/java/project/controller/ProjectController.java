@@ -14,6 +14,7 @@ import project.service.MessageService;
 import project.persistence.entities.User;
 import project.persistence.entities.Project;
 import project.persistence.entities.Message;
+import project.persistence.entities.Milestone;
 
 import java.util.Collections;
 import java.util.List;
@@ -65,6 +66,8 @@ public class ProjectController {
 
 				//Add message info
 				model.addAttribute("messages", messageService.findByProjectId(projectId));
+				// Add milestones
+				model.addAttribute("milestones", projectService.findMilestones(projectId));
 				// Identify if logged in user is the same as owner of project OR
 				// logged in user is a worker on project
 				if (user.getUsername().equals(foundProject.getAdmin())) {
@@ -85,60 +88,84 @@ public class ProjectController {
 	// Add new message to the project
 	@RequestMapping(value = "{projectId}", method = RequestMethod.POST)
 	public String project(@PathVariable Long projectId, @ModelAttribute("newMessage") Message newMessage, HttpSession session, Model model) {
-			if(session.getAttribute("user") != null){
-					User user = (User) session.getAttribute("user");
-					model.addAttribute("user", user);
-					// Add additional message information
-					newMessage.setProjectId(projectId);
-					newMessage.setTimestamp(new Date());
-					newMessage.setAuthor(user.getUsername());
-					newMessage.setAdmin(user.getRole().equals("admin"));
-					newMessage.setHeadWorker(false);
-					Message createMessage = messageService.create(newMessage);
-					Project foundProject = projectService.findOne(projectId);
-					if(createMessage != null){
-						return "redirect:/projects/" + projectId;
-					}
-					else{
-						model.addAttribute("error", "Error submitting message");
-						if (foundProject != null) {
-							boolean isWorker = false;
-							// Find further information about workers
-							String[] workerList = foundProject.getWorkers();
-							if (workerList != null) {
-								List<User> workers = new ArrayList<User>();
-								for (int i = 0; i < workerList.length; i++) {
-									User worker = userService.findByUsername(workerList[i]);
-									// Check if user is worker on project
-									if (user.getUsername().equals(worker.getUsername()))
-										isWorker = true;
-									workers.add(worker);
-								}
-								model.addAttribute("aworkers", workers);
+		if(session.getAttribute("user") != null) {
+				User user = (User) session.getAttribute("user");
+				model.addAttribute("user", user);
+				// Add additional message information
+				newMessage.setProjectId(projectId);
+				newMessage.setTimestamp(new Date());
+				newMessage.setAuthor(user.getUsername());
+				newMessage.setAdmin(user.getRole().equals("admin"));
+				newMessage.setHeadWorker(false);
+				Message createMessage = messageService.create(newMessage);
+				Project foundProject = projectService.findOne(projectId);
+				if(createMessage != null){
+					return "redirect:/projects/" + projectId;
+				}
+				else{
+					model.addAttribute("error", "Error submitting message");
+					if (foundProject != null) {
+						boolean isWorker = false;
+						// Find further information about workers
+						String[] workerList = foundProject.getWorkers();
+						if (workerList != null) {
+							List<User> workers = new ArrayList<User>();
+							for (int i = 0; i < workerList.length; i++) {
+								User worker = userService.findByUsername(workerList[i]);
+								// Check if user is worker on project
+								if (user.getUsername().equals(worker.getUsername()))
+									isWorker = true;
+								workers.add(worker);
 							}
-							// Add project info
-							// Find admin name
-							model.addAttribute("projectAdmin", userService.findByUsername(foundProject.getAdmin()).getName());
-							model.addAttribute("project", foundProject);
-
-							//Add message info
-							model.addAttribute("messages", messageService.findByProjectId(projectId));
-							// Identify if logged in user is the same as owner of project OR
-							// logged in user is a worker on project
-							if (user.getUsername().equals(foundProject.getAdmin())) {
-								// User is admin of project
-							}
-							else if (isWorker) {
-								// User is a worker on project
-							}
-							else return "redirect:/"; // User is not a member of project
-							// Return project if user is member of project
-							return "project";
+							model.addAttribute("aworkers", workers);
 						}
-						else return "redirect:/";
+						// Add project info
+						// Find admin name
+						model.addAttribute("projectAdmin", userService.findByUsername(foundProject.getAdmin()).getName());
+						model.addAttribute("project", foundProject);
+
+						//Add message info
+						model.addAttribute("messages", messageService.findByProjectId(projectId));
+						// Add milestones
+						model.addAttribute("milestones", projectService.findMilestones(projectId));
+						// Identify if logged in user is the same as owner of project OR
+						// logged in user is a worker on project
+						if (user.getUsername().equals(foundProject.getAdmin())) {
+							// User is admin of project
+						}
+						else if (isWorker) {
+							// User is a worker on project
+						}
+						else return "redirect:/"; // User is not a member of project
+						// Return project if user is member of project
+						return "project";
 					}
+					else return "redirect:/";
+				}
+			}
+			else return "redirect:/";
+	}
+
+	// Delete message from the project
+	@RequestMapping(value = "{projectId}/messages/delete/{messageId}", method = RequestMethod.GET)
+	public String project(@PathVariable Long projectId, @PathVariable Long messageId, HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			// Find project and message
+			Message message = messageService.findOne(messageId);
+			Project project = projectService.findOne(projectId);
+			if (message != null && project != null) {
+				// Check if user is author of message and message belongs to project
+				if (user.getUsername().equals(message.getAuthor()) && project.getId().equals(projectId)) {
+					messageService.delete(message);
+					return "redirect:/projects/" + projectId;
 				}
 				else return "redirect:/";
+			}
+			else return "redirect:/";
+		}
+		else return "redirect:/";
 	}
 
 	// Create new project
@@ -167,6 +194,8 @@ public class ProjectController {
 			User user = (User) session.getAttribute("user");
 			// Identify if admin and if admin is owner of project
 			if (user.getRole().equals("admin") && user.getUsername().equals(newProject.getAdmin())) {
+				// Set status of all new projects to not-started
+				newProject.setStatus("not-started");
 				Project createdProject = projectService.create(newProject);
 				if (createdProject != null) {
 					return "redirect:/projects/" + createdProject.getId();
@@ -226,7 +255,15 @@ public class ProjectController {
 			User user = (User) session.getAttribute("user");
 			// Identify if admin and if admin is owner of project
 			if (user.getRole().equals("admin") && user.getUsername().equals(editedProject.getAdmin()) && projectId.equals(editedProject.getId())) {
+				// Transform information from previous project to edited project
+				Project previousProject = projectService.findOne(projectId);
+				editedProject.setStartTime(previousProject.getStartTime());
+				editedProject.setFinishTime(previousProject.getFinishTime());
+				editedProject.setStatus(previousProject.getStatus());
+
+				// Save project
 				Project newlyEditedProject = projectService.create(editedProject);
+
 				if (newlyEditedProject != null) {
 					return "redirect:/projects/" + newlyEditedProject.getId();
 				}
@@ -274,6 +311,113 @@ public class ProjectController {
 					return "redirect:/";
 				}
 				else return "redirect:/";
+			}
+			else return "redirect:/";
+		}
+		else return "redirect:/";
+	}
+
+	// Set milestone page
+	@RequestMapping(value = "{projectId}/milestone", method = RequestMethod.GET)
+	public String setMilestone(@PathVariable Long projectId, HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			Project foundProject = projectService.findOne(projectId);
+			if (foundProject != null) {
+				// Set project info
+				model.addAttribute("project", foundProject);
+				// Here we would have to authenticate the head worker
+				// Until then only admin is allowed to set milestone
+				if (user.getUsername().equals(foundProject.getAdmin())) {
+					return "milestone";
+				}
+				else return "redirect:/";
+			}
+			else return "redirect:/";
+		}
+		else return "redirect:/";
+	}
+	// Post milestone
+	@RequestMapping(value = "{projectId}/milestone", method = RequestMethod.POST)
+	public String postMilestone(@PathVariable Long projectId, @ModelAttribute("newMilestone") Milestone newMilestone, HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			Project foundProject = projectService.findOne(projectId);
+			if (foundProject != null) {
+				// Set project info
+				model.addAttribute("project", foundProject);
+				// Here we would have to authenticate the head worker
+				// Until then only admin is allowed to set milestone
+				if (user.getUsername().equals(foundProject.getAdmin())) {
+					// Set timestamp and project id
+					newMilestone.setTimestamp(new Date());
+					newMilestone.setProjectId(projectId);
+					// Create milestone
+					Milestone createdMilestone = projectService.setMilestone(newMilestone);
+					if (createdMilestone != null) {
+						return "redirect:/projects/" + projectId;
+					}
+					else {
+						model.addAttribute("error", "Error submitting milestone");
+						return "milestone";
+					}
+				}
+				else return "redirect:/";
+			}
+			else return "redirect:/";
+		}
+		else return "redirect:/";
+	}
+
+	// Start project
+	@RequestMapping(value = "{projectId}/start", method = RequestMethod.GET)
+	public String startProject(@PathVariable Long projectId, HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			Project foundProject = projectService.findOne(projectId);
+			if (foundProject != null) {
+				// Set project info
+				model.addAttribute("project", foundProject);
+				// Here we would have to authenticate the head worker
+				// Until then only admin is allowed to start project
+				if (user.getUsername().equals(foundProject.getAdmin())) {
+					// Check if project has status
+					if (foundProject.getStatus() != null) {
+						// Check if project is not already started
+						if (foundProject.getStatus().equals("not-started")) {
+							boolean started = projectService.startProject(projectId);
+						}
+					}
+					else {
+						boolean started = projectService.startProject(projectId);
+					}
+					return "redirect:/projects/" + projectId;
+				}
+				else return "redirect:/";
+			}
+			else return "redirect:/";
+		}
+		else return "redirect:/";
+	}
+	// Finish project
+	@RequestMapping(value = "{projectId}/finish", method = RequestMethod.GET)
+	public String finishProject(@PathVariable Long projectId, HttpSession session, Model model) {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			model.addAttribute("user", user);
+			Project foundProject = projectService.findOne(projectId);
+			if (foundProject != null) {
+				// Set project info
+				model.addAttribute("project", foundProject);
+				// Here we would have to authenticate the head worker
+				// Until then only admin is allowed to finish project
+				if (user.getUsername().equals(foundProject.getAdmin())) {
+					boolean finished = projectService.finishProject(projectId);
+				}
+				return "redirect:/projects/" + projectId;
 			}
 			else return "redirect:/";
 		}

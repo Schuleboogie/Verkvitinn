@@ -2,7 +2,7 @@ package project.persistence.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import project.persistence.entities.Message;
+import project.persistence.entities.Milestone;
 
 import java.util.List;
 
@@ -13,12 +13,12 @@ import java.util.List;
  * http://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html
  *
  */
-public interface MessageRepository extends JpaRepository<Message, Long> {
-	Message save(Message newMessage);
+public interface MilestoneRepository extends JpaRepository<Milestone, Long> {
+	Milestone save(Milestone newMilestone);
 
-	List<Message> findByProjectId(Long projectId);
+	List<Milestone> findByProjectId(Long projectId);
 
-	Message findOne(Long messageId);
+	Milestone findOne(Long id);
 
-	void delete(Message message);
+	void delete(Milestone Milestone);
 }

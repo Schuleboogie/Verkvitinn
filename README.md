@@ -1,5 +1,5 @@
 # Verkvitinn
-Work planner and scheduler for companies, especially those with decentralized teams. Project for Software Project 1 & 2 in Háskóli Íslands.
+Work planner and scheduler for companies, especially those with decentralized teams. Project for Software Project courses 1 & 2 in Háskóli Íslands.
 
 ## Team
 - Skúli Ingvarsson
@@ -7,4 +7,4 @@ Work planner and scheduler for companies, especially those with decentralized te
 - Ragnheiður Sveinsdóttir
 
 ## Setup
-To start web app, type ```mvn spring-boot:run```. Enjoy!
+To start web app, run ```mvn spring-boot:run``` in root directory. Enjoy!

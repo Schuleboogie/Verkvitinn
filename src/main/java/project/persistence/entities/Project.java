@@ -5,12 +5,8 @@ import project.persistence.entities.User;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Date;
 
-/**
- * The class for the Postit Note itself.
- * The system generates a table schema based on this class for this entity.
- * Be sure to annotate any entities you have with the @Entity annotation.
- */
 @Entity
 @Table(name = "projects") // If you want to specify a table name, you can do so here
 public class Project {
@@ -25,18 +21,26 @@ public class Project {
 	private String location;
 	private String tools;
 	private String estTime;
+	// Project start and finish time
+	private Date startTime;
+	private Date finishTime;
 	private String[] workers;
+	// Project status, either not-started, in-progress or finished
+	private String status;
 
 	public Project() {
 	}
-	public Project(String name, String admin, String description, String location, String tools, String estTime, String[] workers) {
+	public Project(String name, String admin, String description, String location, String tools, String estTime, Date startTime, Date finishTime, String[] workers, String status) {
 		this.name = name;
 		this.admin = admin;
 		this.description = description;
 		this.location = location;
 		this.tools = tools;
 		this.estTime = estTime;
+		this.startTime = startTime;
+		this.finishTime = finishTime;
 		this.workers = workers;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -95,11 +99,35 @@ public class Project {
 		this.estTime = estTime;
 	}
 
+	public Date getStartTime() {
+		return this.startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getFinishTime() {
+		return this.finishTime;
+	}
+
+	public void setFinishTime(Date finishTime) {
+		this.finishTime = finishTime;
+	}
+
 	public String[] getWorkers() {
 		return this.workers;
 	}
 
 	public void setWorkers(String[] workers) {
 		this.workers = workers;
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+	<head>
+		<title>Set milestone</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="/css/user/project.css" />
+		<script src="https://use.fontawesome.com/1adde8da0e.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Set milestone</h1>
+			<div th:include="header-buttons" class="header-buttons"></div>
+		</header>
+		<main>
+			<section class="set-milestone">
+				<h2 th:text="${project.name}"></h2>
+				<h3>Set milestone</h3>
+				<form action="" method="post">
+					<label for="title">Title of milestone (maximum 100 characters)</label>
+					<input type="text" name="title" id="title" autofocus="true" />
+					<input type="submit" value="Post milestone" />
+				</form>
+				<p th:text="${error}">Error submitting milestone</p>
+			</section>
+		</main>
+		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/js/moment-with-locales.min.js"></script>
+		<script type="text/javascript" src="/js/project.js"></script>
+	</body>
+</html>

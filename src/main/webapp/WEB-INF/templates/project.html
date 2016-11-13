@@ -13,6 +13,27 @@
 			<div th:include="header-buttons" class="header-buttons"></div>
 		</header>
 		<main>
+			<section class="project-status">
+				<h2>Status</h2>
+				<h3 class="status-icon" th:switch="${project.status}">
+					<span th:case="'not-started'" class="not-started"><i class="fa fa-bed" aria-hidden="true"></i> Not started</span>
+					<span th:case="'in-progress'" class="in-progress"><i class="fa fa-rocket" aria-hidden="true"></i> In progress</span>
+					<span th:case="'finished'" class="finished"><i class="fa fa-check" aria-hidden="true"></i> Finished</span>
+					<span th:case="*">Project status not set</span>
+				</h3>
+				<p th:if="${project.startTime != null}">Project started <span th:text="${project.startTime}" class="project-elapsed"></span> (<span th:text="${project.startTime}" class="project-time"></span>)</p>
+				<p th:if="${project.finishTime != null}">Finished at <span th:text="${project.finishTime}" class="project-time"></span> in <span th:attr="data-start=${project.startTime},data-finish=${project.finishTime}" class="project-duration"></span> days.</p>
+				<a th:href="'/projects/' + ${project.id} + '/start'" th:if="${user.role == 'admin' and project.status == 'not-started'}" class="status-button start-finish-button">Start project</a>
+				<a th:href="'/projects/' + ${project.id} + '/finish'" th:if="${user.role == 'admin' and project.status == 'in-progress'}" class="status-button start-finish-button">Finish project</a>
+				<p class="empty" th:if="${#lists.isEmpty(milestones) and project.status == 'in-progress'}">There are no milestones yet</p>
+				<div th:each="milestone,iterStat : ${milestones}" th:classappend="${iterStat.index > 0}? 'other-milestone' : 'latest-milestone'" class="milestone">
+					<span th:if="${iterStat.index == 0}" class="latest-milestone-title">Latest milestone:</span>
+					<span th:text="${milestone.title}" class="milestone-title"></span>
+					<span th:text="${milestone.timestamp}" class="milestone-time"></span>
+				</div>
+				<a href="#" class="status-button milestone-link" th:if="${#lists.size(milestones) > 1}">See other milestones</a>
+				<a th:if="${project.status == 'in-progress' and user.role == 'admin'}" th:href="'/projects/' + ${project.id} + '/milestone'" class="status-button">Set milestone</a>
+			</section>
 			<section class="project-info">
 				<h2>Project info</h2>
 				<ul>
@@ -29,7 +50,7 @@
 								<img th:src="'https://api.adorable.io/avatars/55/' + ${worker.username} + '.png'" th:alt="${worker.username}" />
 								<span class="worker-info">
 									<span th:text="${worker.name}" class="worker-name"></span>
-									<a th:href="'/users/' + ${worker.username}" class="worker-page" target="_blank">See info</a>
+									<a th:href="'/users/' + ${worker.username}" class="worker-page">See info</a>
 								</span>
 							</li>
 						</ul>
@@ -37,7 +58,7 @@
 				</ul>
 				<ul th:if="${user.role == 'admin'}" class="project-options links">
 					<li>
-						<a th:href="'/projects/' + ${project.id} + '/edit'" class="project-options-link">
+						<a th:if="${project.status != 'finished'}" th:href="'/projects/' + ${project.id} + '/edit'" class="project-options-link">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit project
 						</a>
 					</li>
@@ -59,7 +80,8 @@
 				</div>
 				<p class="empty" th:if="${#lists.isEmpty(messages)}">There are no messages</p>
 				<div th:each="message : ${messages}" class="message worker-message" th:classappend="${message.admin} ? admin-message">
-					<i th:if="${message.admin}" class="fa fa-flag-o" aria-hidden="true"></i>
+					<i th:if="${message.admin}" class="fa fa-flag-o flag-admin-icon" aria-hidden="true"></i>
+					<a th:if="${message.author == user.username}" th:attr="data-href=${project.id} + '/messages/delete/' + ${message.id}" class="message-delete-link"><i class="fa fa-trash-o delete-message-icon" aria-hidden="true"></i></a>
 					<h3 th:text="${message.author}" class="message-author"></h3>
 					<p th:text="${message.content}" class="message-content"></p>
 					<p th:text="${message.timestamp}" class="message-time"></p>

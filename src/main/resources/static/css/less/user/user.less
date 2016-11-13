@@ -78,7 +78,7 @@ main {
 			list-style-type: none;
 
 			li {
-				border-bottom: 1px dashed #000000;
+				border-bottom: 1px solid rgba(0.0, 0.0, 0.0, 0.25);
 				padding: 1em;
 			}
 		}
@@ -145,7 +145,9 @@ main {
 // Mobile
 @media (max-width: 800px) {
 	header {
-		height: 8em;
+		height: auto;
+		overflow: auto;
+		position: static;
 
 		h1 {
 			display: block;
@@ -154,12 +156,29 @@ main {
 			top: 0.5em;
 			text-align: center;
 			padding: 0;
+			margin-bottom: 1em;
 		}
 		div.header-buttons {
-			left: 0;
-			top: inherit;
-			bottom: 0.5em;
-			height: 2em;
+			position: static;
+
+			.header-button {
+				width: 50%;
+				height: 2em;
+				padding: 0.5em 0;
+				transform: none;
+				text-align: center;
+
+				span.header-button-text {
+					transform: none;
+					position: static;
+				}
+			}
+			a.header-button {
+				text-decoration: none;
+			}
+			div.header-user {
+				width: 100%;
+			}
 		}
 	}
 	main {

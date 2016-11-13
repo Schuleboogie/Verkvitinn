@@ -94,7 +94,7 @@ main section ul {
   list-style-type: none;
 }
 main section ul li {
-  border-bottom: 1px dashed #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   padding: 1em;
 }
 main section ul.links li {
@@ -149,7 +149,9 @@ main section p.empty {
 }
 @media (max-width: 800px) {
   header {
-    height: 8em;
+    height: auto;
+    overflow: auto;
+    position: static;
   }
   header h1 {
     display: block;
@@ -158,16 +160,96 @@ main section p.empty {
     top: 0.5em;
     text-align: center;
     padding: 0;
+    margin-bottom: 1em;
   }
   header div.header-buttons {
-    left: 0;
-    top: inherit;
-    bottom: 0.5em;
+    position: static;
+  }
+  header div.header-buttons .header-button {
+    width: 50%;
     height: 2em;
+    padding: 0.5em 0;
+    transform: none;
+    text-align: center;
+  }
+  header div.header-buttons .header-button span.header-button-text {
+    transform: none;
+    position: static;
+  }
+  header div.header-buttons a.header-button {
+    text-decoration: none;
+  }
+  header div.header-buttons div.header-user {
+    width: 100%;
   }
   main section {
     width: 100%;
   }
+}
+main section.project-status {
+  width: 100%;
+  position: relative;
+}
+main section.project-status p,
+main section.project-status h3 {
+  text-align: center;
+}
+main section.project-status h3 span.not-started {
+  color: #000000;
+}
+main section.project-status h3 span.in-progress {
+  color: #999999;
+}
+main section.project-status h3 span.finished {
+  color: #009900;
+}
+main section.project-status a.status-button {
+  display: block;
+  width: 10em;
+  margin: 0 auto 1em auto;
+  padding: 0.5em 1em;
+  text-align: center;
+  background-color: #CC6633;
+  color: #FFFFFF;
+}
+main section.project-status a.start-finish-button {
+  background-color: #CC9966;
+}
+main section.project-status a.clicked {
+  background-color: #996633;
+}
+main section.project-status div.milestone {
+  width: 70%;
+  height: auto;
+  overflow: auto;
+  margin: 0 auto 0.5em auto;
+  border-bottom: 1px solid #000000;
+}
+main section.project-status div.milestone span {
+  width: 48%;
+  display: block;
+}
+main section.project-status div.milestone span.milestone-title {
+  float: left;
+  margin: 0 0 0.2em 1%;
+}
+main section.project-status div.milestone span.milestone-time {
+  float: right;
+  text-align: right;
+  margin: 0 1% 0.2em 0;
+}
+main section.project-status div.latest-milestone {
+  border-bottom: 1px solid #6699FF;
+}
+main section.project-status div.latest-milestone span.latest-milestone-title {
+  margin: 0 auto;
+  text-align: center;
+}
+main section.project-status div.other-milestone {
+  display: none;
+}
+main section.project-status span.project-time {
+  color: rgba(0, 0, 0, 0.5);
 }
 main section.project-info h2 {
   margin: 1rem;
@@ -223,9 +305,6 @@ main section.project-messages {
   padding: 0 1em 0 1em;
   box-sizing: border-box;
 }
-main section.project-messages div.message-form {
-  margin-bottom: 0.5em;
-}
 main section.project-messages div.message-form form textarea,
 main section.project-messages div.message-form form input {
   width: 100%;
@@ -234,12 +313,17 @@ main section.project-messages div.message-form form input {
 main section.project-messages div.message-form form textarea {
   height: 4em;
   margin: 0 auto;
-  border: 1px solid #000000;
+  border: 1px solid rgba(0, 0, 0, 0.25);
   padding: 0.5em 0 0 0.5em;
+}
+main section.project-messages div.message-form form input:focus,
+main section.project-messages div.message-form form textarea:focus {
+  outline: none;
+  border: 1px solid #000000;
 }
 main section.project-messages div.message-form form input {
   padding: 0.5em 0;
-  border: 1px dashed #000000;
+  border: 1px solid rgba(0, 0, 0, 0.25);
   background: none;
 }
 main section.project-messages div.message {
@@ -253,13 +337,50 @@ main section.project-messages div.message h3 {
 }
 main section.project-messages div.message i {
   position: absolute;
-  top: 0.5em;
   right: 0.5em;
+}
+main section.project-messages div.message i.flag-admin-icon {
+  top: 0.5em;
+}
+main section.project-messages div.message i.delete-message-icon {
+  bottom: 0.5em;
+}
+main section.project-messages div.message p.message-time {
+  font-size: 0.8em;
+}
+main section.project-messages div.message div.message-delete-dialog a {
+  color: #CC6633;
 }
 main section.project-messages div.admin-message {
   background-color: #FFFF99;
 }
-@media (max-width: 800px) {
+main section.set-milestone {
+  width: 100%;
+  text-align: center;
+}
+main section.set-milestone h3 {
+  font-weight: 300;
+}
+main section.set-milestone form input {
+  display: block;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  padding: 0.5em 0 0.5em 0.5em;
+  background: none;
+  margin: 1em auto;
+  width: 50%;
+  box-sizing: border-box;
+}
+main section.set-milestone form input:focus {
+  border: 1px solid #000000;
+}
+@media (max-width: 900px) {
+  main section.project-status div.milestone {
+    width: 100%;
+  }
+  main section.project-status a.status-button {
+    width: 100%;
+  }
   main section.project-messages {
     padding: 0;
   }
@@ -274,5 +395,8 @@ main section.project-messages div.admin-message {
     border-left: none;
     border-right: none;
     padding: 1em;
+  }
+  main section.set-milestone form input {
+    width: 95%;
   }
 }

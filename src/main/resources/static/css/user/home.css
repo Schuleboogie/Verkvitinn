@@ -94,7 +94,7 @@ main section ul {
   list-style-type: none;
 }
 main section ul li {
-  border-bottom: 1px dashed #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   padding: 1em;
 }
 main section ul.links li {
@@ -149,7 +149,9 @@ main section p.empty {
 }
 @media (max-width: 800px) {
   header {
-    height: 8em;
+    height: auto;
+    overflow: auto;
+    position: static;
   }
   header h1 {
     display: block;
@@ -158,12 +160,27 @@ main section p.empty {
     top: 0.5em;
     text-align: center;
     padding: 0;
+    margin-bottom: 1em;
   }
   header div.header-buttons {
-    left: 0;
-    top: inherit;
-    bottom: 0.5em;
+    position: static;
+  }
+  header div.header-buttons .header-button {
+    width: 50%;
     height: 2em;
+    padding: 0.5em 0;
+    transform: none;
+    text-align: center;
+  }
+  header div.header-buttons .header-button span.header-button-text {
+    transform: none;
+    position: static;
+  }
+  header div.header-buttons a.header-button {
+    text-decoration: none;
+  }
+  header div.header-buttons div.header-user {
+    width: 100%;
   }
   main section {
     width: 100%;
@@ -190,4 +207,17 @@ main section.projects ul li span.project-location {
 }
 main section.projects ul li span.project-location {
   top: 2.4em;
+}
+main section.projects ul li span.project-status-icon {
+  display: block;
+  margin-top: 0.5em;
+}
+main section.projects ul li span.project-status-icon i.not-started {
+  color: #000000;
+}
+main section.projects ul li span.project-status-icon i.in-progress {
+  color: #999999;
+}
+main section.projects ul li span.project-status-icon i.finished {
+  color: #009900;
 }

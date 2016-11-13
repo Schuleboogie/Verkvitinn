@@ -2,6 +2,75 @@
 @import "user.less";
 
 main {
+	section.project-status {
+		width: 100%;
+		position: relative;
+
+		p, h3 {
+			text-align: center;
+		}
+		h3 {
+			span.not-started {
+				color: #000000;
+			}
+			span.in-progress {
+				color: #999999;
+			}
+			span.finished {
+				color: #009900;
+			}
+		}
+		a.status-button {
+			display: block;
+			width: 10em;
+			margin: 0 auto 1em auto;
+			padding: 0.5em 1em;
+			text-align: center;
+			background-color: @primaryColor;
+			color: #FFFFFF;
+		}
+		a.start-finish-button {
+			background-color: @lighter;
+		}
+		a.clicked {
+			background-color: @secondaryColor;
+		}
+		div.milestone {
+			width: 70%;
+			height: auto;
+			overflow: auto;
+			margin: 0 auto 0.5em auto;
+			border-bottom: 1px solid #000000;
+
+			span {
+				width: 48%;
+				display: block;
+			}
+			span.milestone-title {
+				float: left;
+				margin: 0 0 0.2em 1%;
+			}
+			span.milestone-time {
+				float: right;
+				text-align: right;
+				margin: 0 1% 0.2em 0;
+			}
+		}
+		div.latest-milestone {
+			border-bottom: 1px solid #6699FF;
+
+			span.latest-milestone-title {
+				margin: 0 auto;
+				text-align: center;
+			}
+		}
+		div.other-milestone {
+			display: none;
+		}
+		span.project-time {
+			color: rgba(0, 0, 0, 0.5);
+		}
+	}
 	section.project-info {
 		h2 {
 			margin: 1rem;
@@ -76,12 +145,16 @@ main {
 				textarea {
 					height: 4em;
 					margin: 0 auto;
-					border: 1px solid #000000;
+					border: 1px solid rgba(0.0, 0.0, 0.0, 0.25);
 					padding: 0.5em 0 0 0.5em;
+				}
+				input:focus, textarea:focus {
+					outline: none;
+					border: 1px solid #000000;
 				}
 				input {
 					padding: 0.5em 0;
-					border: 1px dashed #000000;
+					border: 1px solid rgba(0.0, 0.0, 0.0, 0.25);
 					background: none;
 				}
 			}
@@ -97,18 +170,62 @@ main {
 			}
 			i {
 				position: absolute;
-				top: 0.5em;
 				right: 0.5em;
+			}
+			i.flag-admin-icon {
+				top: 0.5em;
+			}
+			i.delete-message-icon {
+				bottom: 0.5em;
+			}
+			p.message-time {
+				font-size: 0.8em;
+			}
+			div.message-delete-dialog {
+				a {
+					color: @primaryColor;
+				}
 			}
 		}
 		div.admin-message {
 			background-color: #FFFF99;
 		}
 	}
+	section.set-milestone {
+		width: 100%;
+		text-align: center;
+
+		h3 {
+			font-weight: 300;
+		}
+		form {
+			input {
+				display: block;
+				outline: none;
+				border: 1px solid rgba(0.0, 0.0, 0.0, 0.25);
+				padding: 0.5em 0 0.5em 0.5em;
+				background: none;
+				margin: 1em auto;
+				width: 50%;
+				box-sizing: border-box;
+			}
+			input:focus {
+				border: 1px solid #000000;
+			}
+		}
+	}
 }
 // Mobile
-@media (max-width: 800px) {
+@media (max-width: 900px) {
 	main {
+		section.project-status {
+			div.milestone {
+				width: 100%;
+			}
+			a.status-button {
+				width: 100%;
+			}
+		}
 		section.project-messages {
 			padding: 0;
 
@@ -126,6 +243,13 @@ main {
 						border-right: none;
 						padding: 1em;
 					}
+				}
+			}
+		}
+		section.set-milestone {
+			form {
+				input {
+					width: 95%;
 				}
 			}
 		}
