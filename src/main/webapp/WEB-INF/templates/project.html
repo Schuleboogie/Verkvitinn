@@ -23,8 +23,8 @@
 				</h3>
 				<p th:if="${project.startTime != null}">Project started <span th:text="${project.startTime}" class="project-elapsed"></span> (<span th:text="${project.startTime}" class="project-time"></span>)</p>
 				<p th:if="${project.finishTime != null}">Finished at <span th:text="${project.finishTime}" class="project-time"></span> in <span th:attr="data-start=${project.startTime},data-finish=${project.finishTime}" class="project-duration"></span> days.</p>
-				<a th:href="'/projects/' + ${project.id} + '/start'" th:if="${user.role == 'admin' and project.status == 'not-started'}" class="status-button start-finish-button">Start project</a>
-				<a th:href="'/projects/' + ${project.id} + '/finish'" th:if="${user.role == 'admin' and project.status == 'in-progress'}" class="status-button start-finish-button">Finish project</a>
+				<a th:href="'/projects/' + ${project.id} + '/start'" th:if="${isHeadWorker == true and project.status == 'not-started'}" class="status-button start-finish-button">Start project</a>
+				<a th:href="'/projects/' + ${project.id} + '/finish'" th:if="${isHeadWorker == true and project.status == 'in-progress'}" class="status-button start-finish-button">Finish project</a>
 				<p class="empty" th:if="${#lists.isEmpty(milestones) and project.status == 'in-progress'}">There are no milestones yet</p>
 				<div th:each="milestone,iterStat : ${milestones}" th:classappend="${iterStat.index > 0}? 'other-milestone' : 'latest-milestone'" class="milestone">
 					<span th:if="${iterStat.index == 0}" class="latest-milestone-title">Latest milestone:</span>
@@ -32,7 +32,7 @@
 					<span th:text="${milestone.timestamp}" class="milestone-time"></span>
 				</div>
 				<a href="#" class="status-button milestone-link" th:if="${#lists.size(milestones) > 1}">See other milestones</a>
-				<a th:if="${project.status == 'in-progress' and user.role == 'admin'}" th:href="'/projects/' + ${project.id} + '/milestone'" class="status-button">Set milestone</a>
+				<a th:if="${project.status == 'in-progress' and isHeadWorker == true}" th:href="'/projects/' + ${project.id} + '/milestone'" class="status-button">Set milestone</a>
 			</section>
 			<section class="project-info">
 				<h2>Project info</h2>
@@ -51,6 +51,7 @@
 								<span class="worker-info">
 									<span th:text="${worker.name}" class="worker-name"></span>
 									<a th:href="'/users/' + ${worker.username}" class="worker-page">See info</a>
+									<span th:if="${worker.headWorker == true}" class="worker-status"><i class="fa fa-star-o" aria-hidden="true"></i> Head worker</span>
 								</span>
 							</li>
 						</ul>
@@ -79,7 +80,7 @@
 					<div class="error" th:text="${error}"></div>
 				</div>
 				<p class="empty" th:if="${#lists.isEmpty(messages)}">There are no messages</p>
-				<div th:each="message : ${messages}" class="message worker-message" th:classappend="${message.admin} ? admin-message">
+				<div th:each="message : ${messages}" class="message worker-message" th:classappend="${message.admin || message.headWorker} ? admin-message">
 					<i th:if="${message.admin}" class="fa fa-flag-o flag-admin-icon" aria-hidden="true"></i>
 					<a th:if="${message.author == user.username}" th:attr="data-href=${project.id} + '/messages/delete/' + ${message.id}" class="message-delete-link"><i class="fa fa-trash-o delete-message-icon" aria-hidden="true"></i></a>
 					<h3 th:text="${message.author}" class="message-author"></h3>

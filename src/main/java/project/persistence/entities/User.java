@@ -16,14 +16,17 @@ public class User {
 	private String role;
 	// The user's name
 	private String name;
+	// Boolean for storing information about whether user is head worker on certain project
+	private boolean headWorker;
 
 	public User() {
 	}
-	public User(String username, String password, String role, String name) {
+	public User(String username, String password, String role, String name, boolean headWorker) {
 		this.username = username;
 		this.password = password;
 		this.role = role;
 		this.name = name;
+		this.headWorker = headWorker;
 	}
 
 	public Long getId() {
@@ -64,5 +67,13 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean getHeadWorker() {
+		return this.headWorker;
+	}
+
+	public void setHeadWorker(boolean headWorker) {
+		this.headWorker = headWorker;
 	}
 }

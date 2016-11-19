@@ -129,12 +129,18 @@ main section ul.worker-list li span.worker-info a.worker-page {
   display: block;
   text-decoration: underline;
 }
+main section ul.worker-list li span.worker-info span.worker-status {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+}
 main section ul.worker-list li a.add {
   position: absolute;
   top: 0.5em;
   right: 0.5em;
 }
-main section ul.worker-list li a.set-head-worker {
+main section ul.worker-list li a.set-head-worker,
+main section ul.worker-list li a.remove-head-worker {
   position: absolute;
   top: 2em;
   right: 0.5em;

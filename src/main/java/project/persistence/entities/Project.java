@@ -25,12 +25,14 @@ public class Project {
 	private Date startTime;
 	private Date finishTime;
 	private String[] workers;
+	// Head workers, which can change status of project and set milestones
+	private String[] headWorkers;
 	// Project status, either not-started, in-progress or finished
 	private String status;
 
 	public Project() {
 	}
-	public Project(String name, String admin, String description, String location, String tools, String estTime, Date startTime, Date finishTime, String[] workers, String status) {
+	public Project(String name, String admin, String description, String location, String tools, String estTime, Date startTime, Date finishTime, String[] workers, String[] headWorkers, String status) {
 		this.name = name;
 		this.admin = admin;
 		this.description = description;
@@ -40,6 +42,7 @@ public class Project {
 		this.startTime = startTime;
 		this.finishTime = finishTime;
 		this.workers = workers;
+		this.headWorkers = headWorkers;
 		this.status = status;
 	}
 
@@ -121,6 +124,14 @@ public class Project {
 
 	public void setWorkers(String[] workers) {
 		this.workers = workers;
+	}
+
+	public String[] getHeadWorkers() {
+		return this.headWorkers;
+	}
+
+	public void setHeadWorkers(String[] headWorkers) {
+		this.headWorkers = headWorkers;
 	}
 
 	public String getStatus() {

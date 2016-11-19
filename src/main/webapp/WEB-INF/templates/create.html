@@ -23,23 +23,23 @@
 					<input type="hidden" name="id" th:if="${nproject != null}" th:attr="value=${nproject.id}" />
 					<div class="field">
 						<label for="name">Project name</label>
-						<input type="text" name="name" id="name" th:if="${nproject == null}" autofocus="true" />
-						<input type="text" name="name" id="name" th:if="${nproject != null}" th:attr="value=${nproject.name}" autofocus="true" />
+						<input type="text" name="name" id="name" th:if="${nproject == null}" autofocus="true" required="true" />
+						<input type="text" name="name" id="name" th:if="${nproject != null}" th:attr="value=${nproject.name}" autofocus="true" required="true" />
 					</div>
 					<div class="field">
 						<label for="description">Short description of the project</label>
-						<textarea name="description" th:if="${nproject == null}" id="description"></textarea>
-						<textarea name="description" th:if="${nproject != null}" th:text="${nproject.description}" id="description"></textarea>
+						<textarea name="description" th:if="${nproject == null}" id="description" required="true"></textarea>
+						<textarea name="description" th:if="${nproject != null}" th:text="${nproject.description}" id="description" required="true"></textarea>
 					</div>
 					<div class="field">
 						<label for="location">Location</label>
-						<input type="text" name="location" th:if="${nproject == null}" id="location" />
-						<input type="text" name="location" th:if="${nproject != null}" th:attr="value=${nproject.location}" id="location" />
+						<input type="text" name="location" th:if="${nproject == null}" id="location" required="true" />
+						<input type="text" name="location" th:if="${nproject != null}" th:attr="value=${nproject.location}" id="location" required="true" />
 					</div>
 					<div class="field">
 						<label for="tools">Required tools</label>
-						<input type="text" name="tools" th:if="${nproject == null}" id="tools" />
-						<input type="text" name="tools" th:if="${nproject != null}" th:attr="value=${nproject.tools}" id="tools" />
+						<input type="text" name="tools" th:if="${nproject == null}" id="tools" required="true" />
+						<input type="text" name="tools" th:if="${nproject != null}" th:attr="value=${nproject.tools}" id="tools" required="true"/>
 					</div>
 					<div class="field">
 						<label for="est-time">Estimated time</label>
@@ -55,8 +55,11 @@
 									<span th:text="${worker.name}" class="worker-name"></span>
 									<a th:href="'/users/' + ${worker.username}" class="worker-page" target="_blank">See info</a>
 									<input type="hidden" name="workers" th:attr="value=${worker.username}" />
+									<input type="hidden" th:attrappend="name=${worker.headWorker} ? headWorkers" class="is-head-worker" th:attr="value=${worker.username}" />
 								</span>
 								<a href="#" class="add"><i class="fa fa-minus-square-o" aria-hidden="true"></i> Remove worker</a>
+								<a href="#" th:if="${worker.headWorker != true}" class="set-head-worker"><i class="fa fa-star-o" aria-hidden="true"></i> Add as head worker</a>
+								<a href="#" th:if="${worker.headWorker == true}" class="remove-head-worker"><i class="fa fa-eraser" aria-hidden="true"></i> Remove from head workers</a>
 							</li>
 							<p th:if="${#lists.isEmpty(aworkers)}" class="empty">There are no assigned workers</p>
 						</ul>
@@ -77,6 +80,7 @@
 							<span th:text="${worker.name}" class="worker-name"></span>
 							<a th:href="'/users/' + ${worker.username}" class="worker-page" target="_blank">See info</a>
 							<input type="hidden" name="workers" th:attr="value=${worker.username}" />
+							<input type="hidden" class="is-head-worker" th:attr="value=${worker.username}" />
 						</span>
 						<a href="#" class="add"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Add worker</a>
 					</li>

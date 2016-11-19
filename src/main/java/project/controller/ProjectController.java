@@ -45,9 +45,10 @@ public class ProjectController {
 			model.addAttribute("user", user);
 			Project foundProject = projectService.findOne(projectId);
 			if (foundProject != null) {
-				boolean isWorker = false;
 				// Find further information about workers
+				boolean isWorker = false;
 				String[] workerList = foundProject.getWorkers();
+				String[] headWorkerList = foundProject.getHeadWorkers();
 				if (workerList != null) {
 					List<User> workers = new ArrayList<User>();
 					for (int i = 0; i < workerList.length; i++) {
@@ -55,9 +56,25 @@ public class ProjectController {
 						// Check if user is worker on project
 						if (user.getUsername().equals(worker.getUsername()))
 							isWorker = true;
+						// Check if user is head worker
+						if (headWorkerList != null) {
+							for (int j = 0; j < headWorkerList.length; j++) {
+								// Check if worker is head worker on project
+								if (worker.getUsername().equals(headWorkerList[j]))
+									worker.setHeadWorker(true);
+							}
+						}
 						workers.add(worker);
 					}
 					model.addAttribute("aworkers", workers);
+				}
+				// Check if user is head worker
+				if (headWorkerList != null) {
+					for (int a = 0; a < headWorkerList.length; a++) {
+						// Check if user is head worker on project
+						if (user.getUsername().equals(headWorkerList[a]))
+							model.addAttribute("isHeadWorker", true);
+					}
 				}
 				// Add project info
 				// Find admin name
@@ -88,62 +105,87 @@ public class ProjectController {
 	// Add new message to the project
 	@RequestMapping(value = "{projectId}", method = RequestMethod.POST)
 	public String project(@PathVariable Long projectId, @ModelAttribute("newMessage") Message newMessage, HttpSession session, Model model) {
-		if(session.getAttribute("user") != null) {
+		if (session.getAttribute("user") != null) {
+			Project foundProject = projectService.findOne(projectId);
+			if (foundProject != null) {
 				User user = (User) session.getAttribute("user");
 				model.addAttribute("user", user);
 				// Add additional message information
+				// Check if user is head worker
+				newMessage.setHeadWorker(false);
+				String[] headWorkerList = foundProject.getHeadWorkers();
+				if (headWorkerList != null) {
+					for (int a = 0; a < headWorkerList.length; a++) {
+						// Check if user is head worker on project
+						if (user.getUsername().equals(headWorkerList[a]))
+							newMessage.setHeadWorker(true);
+					}
+				}
 				newMessage.setProjectId(projectId);
 				newMessage.setTimestamp(new Date());
 				newMessage.setAuthor(user.getUsername());
 				newMessage.setAdmin(user.getRole().equals("admin"));
-				newMessage.setHeadWorker(false);
 				Message createMessage = messageService.create(newMessage);
-				Project foundProject = projectService.findOne(projectId);
-				if(createMessage != null){
+				if (createMessage != null) {
 					return "redirect:/projects/" + projectId;
 				}
-				else{
+				else {
 					model.addAttribute("error", "Error submitting message");
-					if (foundProject != null) {
-						boolean isWorker = false;
-						// Find further information about workers
-						String[] workerList = foundProject.getWorkers();
-						if (workerList != null) {
-							List<User> workers = new ArrayList<User>();
-							for (int i = 0; i < workerList.length; i++) {
-								User worker = userService.findByUsername(workerList[i]);
-								// Check if user is worker on project
-								if (user.getUsername().equals(worker.getUsername()))
-									isWorker = true;
-								workers.add(worker);
+					boolean isWorker = false;
+					// Find further information about workers
+					String[] workerList = foundProject.getWorkers();
+					if (workerList != null) {
+						List<User> workers = new ArrayList<User>();
+						for (int i = 0; i < workerList.length; i++) {
+							User worker = userService.findByUsername(workerList[i]);
+							// Check if user is worker on project
+							if (user.getUsername().equals(worker.getUsername()))
+								isWorker = true;
+							// Check if user is head worker
+							if (headWorkerList != null) {
+								for (int j = 0; j < headWorkerList.length; j++) {
+									// Check if worker is head worker on project
+									if (worker.getUsername().equals(headWorkerList[i]))
+										worker.setHeadWorker(true);
+								}
 							}
-							model.addAttribute("aworkers", workers);
+							workers.add(worker);
 						}
-						// Add project info
-						// Find admin name
-						model.addAttribute("projectAdmin", userService.findByUsername(foundProject.getAdmin()).getName());
-						model.addAttribute("project", foundProject);
-
-						//Add message info
-						model.addAttribute("messages", messageService.findByProjectId(projectId));
-						// Add milestones
-						model.addAttribute("milestones", projectService.findMilestones(projectId));
-						// Identify if logged in user is the same as owner of project OR
-						// logged in user is a worker on project
-						if (user.getUsername().equals(foundProject.getAdmin())) {
-							// User is admin of project
-						}
-						else if (isWorker) {
-							// User is a worker on project
-						}
-						else return "redirect:/"; // User is not a member of project
-						// Return project if user is member of project
-						return "project";
+						model.addAttribute("aworkers", workers);
 					}
-					else return "redirect:/";
+					// Check if user is head worker
+					if (headWorkerList != null) {
+						for (int a = 0; a < headWorkerList.length; a++) {
+							// Check if user is head worker on project
+							if (user.getUsername().equals(headWorkerList[a]))
+								model.addAttribute("isHeadWorker", true);
+						}
+					}
+					// Add project info
+					// Find admin name
+					model.addAttribute("projectAdmin", userService.findByUsername(foundProject.getAdmin()).getName());
+					model.addAttribute("project", foundProject);
+
+					//Add message info
+					model.addAttribute("messages", messageService.findByProjectId(projectId));
+					// Add milestones
+					model.addAttribute("milestones", projectService.findMilestones(projectId));
+					// Identify if logged in user is the same as owner of project OR
+					// logged in user is a worker on project
+					if (user.getUsername().equals(foundProject.getAdmin())) {
+						// User is admin of project
+					}
+					else if (isWorker) {
+						// User is a worker on project
+					}
+					else return "redirect:/"; // User is not a member of project
+					// Return project if user is member of project
+					return "project";
 				}
 			}
 			else return "redirect:/";
+		}
+		else return "redirect:/";
 	}
 
 	// Delete message from the project
@@ -224,11 +266,24 @@ public class ProjectController {
 				// Identify if logged in user is owner of project
 				if (user.getUsername().equals(foundProject.getAdmin())) {
 					// Find further information about workers
+					boolean isWorker = false;
 					String[] workerList = foundProject.getWorkers();
+					String[] headWorkerList = foundProject.getHeadWorkers();
 					if (workerList != null) {
 						List<User> workers = new ArrayList<User>();
 						for (int i = 0; i < workerList.length; i++) {
 							User worker = userService.findByUsername(workerList[i]);
+							// Check if user is worker on project
+							if (user.getUsername().equals(worker.getUsername()))
+								isWorker = true;
+							// Check if user is head worker
+							if (headWorkerList != null) {
+								for (int j = 0; j < headWorkerList.length; j++) {
+									// Check if worker is head worker on project
+									if (worker.getUsername().equals(headWorkerList[i]))
+										worker.setHeadWorker(true);
+								}
+							}
 							workers.add(worker);
 						}
 						model.addAttribute("aworkers", workers);
@@ -272,11 +327,24 @@ public class ProjectController {
 					Project foundProject = projectService.findOne(projectId);
 					if (foundProject != null) {
 						// Find further information about workers
+						boolean isWorker = false;
 						String[] workerList = foundProject.getWorkers();
+						String[] headWorkerList = foundProject.getHeadWorkers();
 						if (workerList != null) {
 							List<User> workers = new ArrayList<User>();
 							for (int i = 0; i < workerList.length; i++) {
 								User worker = userService.findByUsername(workerList[i]);
+								// Check if user is worker on project
+								if (user.getUsername().equals(worker.getUsername()))
+									isWorker = true;
+								// Check if user is head worker
+								if (headWorkerList != null) {
+									for (int j = 0; j < headWorkerList.length; j++) {
+										// Check if worker is head worker on project
+										if (worker.getUsername().equals(headWorkerList[i]))
+											worker.setHeadWorker(true);
+									}
+								}
 								workers.add(worker);
 							}
 							model.addAttribute("aworkers", workers);
@@ -327,12 +395,14 @@ public class ProjectController {
 			if (foundProject != null) {
 				// Set project info
 				model.addAttribute("project", foundProject);
-				// Here we would have to authenticate the head worker
-				// Until then only admin is allowed to set milestone
-				if (user.getUsername().equals(foundProject.getAdmin())) {
-					return "milestone";
+				// Check if user is head worker on project
+				String[] headWorkerList = foundProject.getHeadWorkers();
+				for (int i = 0; i < headWorkerList.length; i++) {
+					if (user.getUsername().equals(headWorkerList[i])) {
+						return "milestone";
+					}
 				}
-				else return "redirect:/";
+				return "redirect:/";
 			}
 			else return "redirect:/";
 		}
@@ -348,23 +418,25 @@ public class ProjectController {
 			if (foundProject != null) {
 				// Set project info
 				model.addAttribute("project", foundProject);
-				// Here we would have to authenticate the head worker
-				// Until then only admin is allowed to set milestone
-				if (user.getUsername().equals(foundProject.getAdmin())) {
-					// Set timestamp and project id
-					newMilestone.setTimestamp(new Date());
-					newMilestone.setProjectId(projectId);
-					// Create milestone
-					Milestone createdMilestone = projectService.setMilestone(newMilestone);
-					if (createdMilestone != null) {
-						return "redirect:/projects/" + projectId;
-					}
-					else {
-						model.addAttribute("error", "Error submitting milestone");
-						return "milestone";
+				// Check if user is head worker on project
+				String[] headWorkerList = foundProject.getHeadWorkers();
+				for (int i = 0; i < headWorkerList.length; i++) {
+					if (user.getUsername().equals(headWorkerList[i])) {
+						// Set timestamp and project id
+						newMilestone.setTimestamp(new Date());
+						newMilestone.setProjectId(projectId);
+						// Create milestone
+						Milestone createdMilestone = projectService.setMilestone(newMilestone);
+						if (createdMilestone != null) {
+							return "redirect:/projects/" + projectId;
+						}
+						else {
+							model.addAttribute("error", "Error submitting milestone");
+							return "milestone";
+						}
 					}
 				}
-				else return "redirect:/";
+				return "redirect:/";
 			}
 			else return "redirect:/";
 		}
@@ -381,22 +453,24 @@ public class ProjectController {
 			if (foundProject != null) {
 				// Set project info
 				model.addAttribute("project", foundProject);
-				// Here we would have to authenticate the head worker
-				// Until then only admin is allowed to start project
-				if (user.getUsername().equals(foundProject.getAdmin())) {
-					// Check if project has status
-					if (foundProject.getStatus() != null) {
-						// Check if project is not already started
-						if (foundProject.getStatus().equals("not-started")) {
+				// Check if user is head worker on project
+				String[] headWorkerList = foundProject.getHeadWorkers();
+				for (int i = 0; i < headWorkerList.length; i++) {
+					if (user.getUsername().equals(headWorkerList[i])) {
+						// Check if project has status
+						if (foundProject.getStatus() != null) {
+							// Check if project is not already started
+							if (foundProject.getStatus().equals("not-started")) {
+								boolean started = projectService.startProject(projectId);
+							}
+						}
+						else {
 							boolean started = projectService.startProject(projectId);
 						}
+						return "redirect:/projects/" + projectId;
 					}
-					else {
-						boolean started = projectService.startProject(projectId);
-					}
-					return "redirect:/projects/" + projectId;
 				}
-				else return "redirect:/";
+				return "redirect:/";
 			}
 			else return "redirect:/";
 		}
@@ -412,10 +486,12 @@ public class ProjectController {
 			if (foundProject != null) {
 				// Set project info
 				model.addAttribute("project", foundProject);
-				// Here we would have to authenticate the head worker
-				// Until then only admin is allowed to finish project
-				if (user.getUsername().equals(foundProject.getAdmin())) {
-					boolean finished = projectService.finishProject(projectId);
+				// Check if user is head worker on project
+				String[] headWorkerList = foundProject.getHeadWorkers();
+				for (int i = 0; i < headWorkerList.length; i++) {
+					if (user.getUsername().equals(headWorkerList[i])) {
+						boolean finished = projectService.finishProject(projectId);
+					}
 				}
 				return "redirect:/projects/" + projectId;
 			}
