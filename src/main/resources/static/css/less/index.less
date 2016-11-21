@@ -1,9 +1,12 @@
 @import "main.less";
 
+body {
+	background-color: @lighter;
+}
 header {
 	width: 100%;
-	height: 20%;
-	background-color: @primaryColor;
+	height: 5em;
+	background-color: transparent;
 	color: #FFFFFF;
 	position: relative;
 
@@ -12,17 +15,21 @@ header {
 		.centered;
 		font-weight: 300;
 		text-transform: uppercase;
-		letter-spacing: 0.3em;
+		letter-spacing: 0.2em;
 	}
 }
 main {
 	width: 100%;
-	height: 80%;
 	position: relative;
+	text-align: center;
 
+	img {
+		width: 7em;
+	}
 	div.form-container {
 		width: 50%;
-		.centered;
+		margin: 0 auto;
+		color: #000000;
 
 		form {
 			text-align: center;
@@ -35,35 +42,46 @@ main {
 					padding: 0.5em;
 					font-size: 1.2em;
 					font-weight: bold;
+					color: #FFFFFF;
+				}
+				// Inset look
+				.inset {
+					-webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+					-moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+					box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 				}
 				input {
 					width: 100%;
 					height: 2em;
 					box-sizing: border-box;
-					background-color: @primaryColor;
-					color: #FFFFFF;
+					background-color: #FFFFFF;
+					color: #000000;
 					border-radius: 5px;
 					border: none;
 					padding-left: 1em;
+					.inset
 				}
 				input:focus {
 					outline: none;
-					background-color: @secondaryColor;
-					color: #FFFFFF;
+					-webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+					-moz-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+					box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
 				}
+				/*
 				input[type="text"], input[type="password"], .inset {
 					-webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 					-moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 					box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-				}
+				}*/
 				input[type="submit"] {
 					margin-top: 1em;
 					padding: 15px 0 35px 0;
 					font-weight: bold;
-					.inset
 				}
 				input[type="submit"]:hover {
-					background-color: @secondaryColor;
+					-webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+					-moz-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+					box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
 				}
 			}
 		}

@@ -23,10 +23,13 @@ body {
     font-size: 12px;
   }
 }
+body {
+  background-color: #CC9966;
+}
 header {
   width: 100%;
-  height: 20%;
-  background-color: #CC6633;
+  height: 5em;
+  background-color: transparent;
   color: #FFFFFF;
   position: relative;
 }
@@ -38,64 +41,73 @@ header h1 {
   transform: translate(-50%, -50%);
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
 }
 main {
   width: 100%;
-  height: 80%;
   position: relative;
+  text-align: center;
+}
+main img {
+  width: 7em;
 }
 main div.form-container {
   width: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 0 auto;
+  color: #000000;
 }
 main div.form-container form {
   text-align: center;
 }
 main div.form-container form div.field {
   padding: 0.5em;
+  /*
+				input[type="text"], input[type="password"], .inset {
+					-webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+					-moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+					box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+				}*/
 }
 main div.form-container form div.field label {
   display: block;
   padding: 0.5em;
   font-size: 1.2em;
   font-weight: bold;
-}
-main div.form-container form div.field input {
-  width: 100%;
-  height: 2em;
-  box-sizing: border-box;
-  background-color: #CC6633;
-  color: #FFFFFF;
-  border-radius: 5px;
-  border: none;
-  padding-left: 1em;
-}
-main div.form-container form div.field input:focus {
-  outline: none;
-  background-color: #996633;
   color: #FFFFFF;
 }
-main div.form-container form div.field input[type="text"],
-main div.form-container form div.field input[type="password"],
 main div.form-container form div.field .inset {
   -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
-main div.form-container form div.field input[type="submit"] {
-  margin-top: 1em;
-  padding: 15px 0 35px 0;
-  font-weight: bold;
+main div.form-container form div.field input {
+  width: 100%;
+  height: 2em;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  color: #000000;
+  border-radius: 5px;
+  border: none;
+  padding-left: 1em;
   -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
+main div.form-container form div.field input:focus {
+  outline: none;
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+}
+main div.form-container form div.field input[type="submit"] {
+  margin-top: 1em;
+  padding: 15px 0 35px 0;
+  font-weight: bold;
+}
 main div.form-container form div.field input[type="submit"]:hover {
-  background-color: #996633;
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
 }
 main div.form-container div.error {
   text-align: center;

@@ -16,22 +16,19 @@ import java.util.regex.Pattern;
 
 @Controller
 public class IndexController implements ErrorController{
+	private static final String PATH = "/error";
 
-    private static final String PATH = "/error";
+	@RequestMapping(value = PATH)
+	public String error(Model model, HttpServletResponse response) {
+		String s= String.valueOf(response.getStatus());
+		if(s.matches("5..")){
+			return "errors";
+		}
+		else return "redirect:/";
+	}
 
-    @RequestMapping(value = PATH)
-    public String error(Model model, HttpServletResponse response) {
-    	//model.addAttribute("error", response.getStatus());
-    	//System.out.println("heeeeello");
-    	String s= String.valueOf(response.getStatus());
-    	if(s.matches("5..")){
-    		return "errors";
-    	}
-    	else return "redirect:/";
-    }
-
-    @Override
-    public String getErrorPath() {
-        return PATH;
-    }
+	@Override
+	public String getErrorPath() {
+		return PATH;
+	}
 }
