@@ -45,7 +45,7 @@ header div.header-buttons {
   height: 100%;
 }
 header div.header-buttons .header-button {
-  width: 5em;
+  width: 7em;
   height: 100%;
   float: left;
   color: inherit;
@@ -63,18 +63,18 @@ header div.header-buttons .header-button span.header-button-text {
 header div.header-buttons a.header-button:hover {
   background-color: #CC9966;
 }
-header div.header-buttons div.header-user {
-  width: 7em;
+header div.header-buttons .header-user {
+  width: 10em;
 }
-header div.header-buttons div.header-user span.header-button-text {
+header div.header-buttons .header-user span.header-button-text {
   width: 100%;
   text-align: center;
 }
-header div.header-buttons div.header-user span.header-button-text img.header-user-image {
+header div.header-buttons .header-user span.header-button-text img.header-user-image {
   height: 1em;
   display: inline;
 }
-header div.header-buttons div.header-user span.header-button-text span.header-username {
+header div.header-buttons .header-user span.header-button-text span.header-username {
   display: inline;
   margin-left: 0.2em;
   font-size: 0.8em;
